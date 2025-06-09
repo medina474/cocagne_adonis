@@ -1,0 +1,14 @@
+@layout.app({ title: "Dashboard" })
+ @slot('meta')
+    <meta name="description" content="Dashboard">
+  @endslot
+  @slot('main')
+    <h1>Bienvenue sur le Dashboard</h1>
+    <p>Vous êtes connecté.</p>
+
+    <form method="POST" action="/logout">
+      {{ csrfField() }}
+      <button type="submit">Se déconnecter</button>
+    </form>
+  @endslot
+@end

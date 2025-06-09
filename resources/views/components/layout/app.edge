@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+  <title>{{ title || "Your default title" }}</title>
+  @if ($slots.meta)
+    {{{ await $slots.meta() }}}
+  @endif
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  {{{ await $slots.main() }}}
+</body>
+
+</html>
