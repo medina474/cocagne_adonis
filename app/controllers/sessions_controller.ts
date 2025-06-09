@@ -13,7 +13,7 @@ export default class SessionsController {
     try {
       const user = await User.verifyCredentials(email, password)
 
-      await auth.use('web').login(user)
+      await auth.use('web').login(user, !!request.input('remember_me'))
 
       return response.redirect('/dashboard')
     } catch {

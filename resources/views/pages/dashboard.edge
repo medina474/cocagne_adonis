@@ -5,6 +5,9 @@
   @slot('main')
     <h1>Bienvenue sur le Dashboard</h1>
     <p>Vous êtes connecté.</p>
+    @if(auth.isAuthenticated)
+      <p> Hello {{ auth.user.email }} </p>
+    @end
 
     <form method="POST" action="/logout">
       {{ csrfField() }}

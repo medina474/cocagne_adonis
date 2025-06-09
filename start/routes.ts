@@ -15,9 +15,7 @@ router.on('/').render('pages/home')
 
 router.get('/login', [SessionsController, 'showLogin']).use(middleware.guest())
 router.post('/login', [SessionsController, 'login'])
-router.post('/logout', [SessionsController, 'logout'])
+router.post('/logout', [SessionsController, 'logout']).use(middleware.auth())
 
 router.get('/dashboard', async ({ view }) => view.render('pages/dashboard')) 
-  .use([
-    middleware.auth()
-  ])
+  .use(middleware.auth())
