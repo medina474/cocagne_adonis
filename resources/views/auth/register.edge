@@ -1,0 +1,26 @@
+@layout.app({ title: "Inscription" })
+  @slot('meta')
+    <meta name="description" content="A welcome page made with EdgeJS">
+  @endslot
+
+@slot('main')
+  <h1>Inscription</h1>
+
+  @if(flashMessages.get('error'))
+    <p style="color: red">{{ flashMessages.get('error') }}</p>
+  @endif
+
+  <form method="POST" action="/register">
+    {{ csrfField() }}
+    <label>Email:</label>
+    <input type="email" name="email" required />
+
+    <label>Mot de passe:</label>
+    <input type="password" name="password" required />
+
+    <button type="submit">S’inscrire</button>
+  </form>
+
+  <p>Déjà un compte ? <a href="/login">Se connecter</a></p>
+  @endslot
+@end
