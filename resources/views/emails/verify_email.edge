@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Vérifiez votre adresse email</h1>
+    <p>Merci pour votre inscription. Veuillez confirmer votre adresse email en cliquant sur le lien ci-dessous :</p>
+    <a href="{{ `${request.protocol()}://${request.host()}/verify/${token}` }}">Confirmer mon email</a>
+  </body>
+</html>

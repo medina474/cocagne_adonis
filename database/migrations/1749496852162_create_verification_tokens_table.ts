@@ -5,15 +5,15 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.string('verificationToken').nullable()
-      table.timestamp('verificationTokenExpiresAt').nullable()
-      table.timestamp('emailVerifiedAt').nullable()
+      table.string('verification_token').nullable()
+      table.timestamp('verification_token_expires_at').nullable()
+      table.timestamp('email_verified_at').nullable()
     })
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumns('verificationToken', 'verificationTokenExpiresAt', 'emailVerifiedAt')
+      table.dropColumns('verification_token', 'verification_token_expires_at', 'email_verified_at')
     })
   }
 }
