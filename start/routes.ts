@@ -9,8 +9,13 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+import SessionsController from '#controllers/sessions_controller'
 
 router.on('/').render('pages/home')
+
+router.get('/login', [SessionsController, 'showLogin']).use(middleware.guest())
+router.post('/login', [SessionsController, 'login'])
+router.post('/logout', [SessionsController, 'logout'])
 
 router.get('/dashboard', async ({ view }) => view.render('pages/dashboard')) 
   .use([

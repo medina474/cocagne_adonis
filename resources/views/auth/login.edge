@@ -1,0 +1,25 @@
+@layout.app({ title: "Login" })
+  @slot('meta')
+    <meta name="description" content="A welcome page made with EdgeJS">
+  @endslot
+
+  @slot('main')
+  <h1>Login</h1>
+
+  @if(flashMessages.get('error'))
+    <p style="color: red">{{ flashMessages.get('error') }}</p>
+  @endif
+
+  <form method="POST" action="/login">
+    {{ csrfField() }}
+    <label>Email:</label>
+    <input type="email" name="email" required />
+    <label>Password:</label>
+    <input type="password" name="password" required />
+    <label>
+      <input type="checkbox" name="remember_me"> Se souvenir de moi
+    </label>
+    <button type="submit">Login</button>
+  </form>
+  @endslot
+@end
