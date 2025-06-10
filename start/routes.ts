@@ -26,7 +26,7 @@ router.get('/verify/:token', [UsersController, 'verifyEmail'])
 router.get('/forgot-password', [PasswordResetController, 'showForgotForm'])
 router.post('/forgot-password', [PasswordResetController, 'sendResetLink'])
 
-router.get('/reset-password/:token', [PasswordResetController, 'showResetForm'])
+router.get('/reset-password/:token', [PasswordResetController, 'showResetForm']) .as('reset.password')
 router.post('/reset-password', [PasswordResetController, 'resetPassword'])
 
 router.get('/dashboard', async ({ view }) => view.render('pages/dashboard')) 

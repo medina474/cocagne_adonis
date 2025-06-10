@@ -56,7 +56,7 @@ export default class PasswordResetController {
       return response.redirect('/forgot-password')
     }
 
-    user.password = await hash.make(password)
+    user.password = password
     user.resetToken = null
     user.resetTokenExpiresAt = null
     await user.save()
