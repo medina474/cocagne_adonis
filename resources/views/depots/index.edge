@@ -1,0 +1,9 @@
+@layout.main()
+
+  <h1>Dépôts</h1>
+  
+  @each(depot in depots)
+    <li>{{ depot.depot }}</li>
+  @endeach
+
+@end

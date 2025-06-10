@@ -3,6 +3,7 @@
     <meta name="description" content="A welcome page made with EdgeJS">
   @endslot
 
+  @slot('main')
   <h1>Login</h1>
 
   @if(flashMessages.get('error'))
@@ -21,4 +22,5 @@
     <button type="submit">Login</button>
     <a href="/forgot-password">J'ai oublié</a>
   </form>
+  @endslot
 @end
