@@ -2,7 +2,6 @@ import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import mail from '@adonisjs/mail/services/main'
 import { DateTime } from 'luxon'
-import hash from '@adonisjs/core/services/hash'
 
 export default class PasswordResetController {
     async showForgotForm({ view }: HttpContext) {
@@ -36,7 +35,13 @@ export default class PasswordResetController {
     return response.redirect('/forgot-password')
   }
 
-  async showResetForm({ params, view, session, response }: HttpContext) {
+  async showResetForm({ params, view, session, response, request }: HttpContext) {
+
+    if (!request.hasValidSignature()) {
+      session.flash('error', 'Lien invalide ou expiré.')
+      return response.redirect('/forgot-password')
+    }
+
     const user = await User.findBy('resetToken', params.token)
 
     if (!user || !user.resetTokenExpiresAt || user.resetTokenExpiresAt < DateTime.utc()) {

@@ -6,7 +6,7 @@ import mail from '@adonisjs/mail/services/main'
 import Database from '@adonisjs/lucid/services/db'
 
 export default class UsersController {
-    async register({ request, response, session }: HttpContext) {
+  async register({ request, response, session }: HttpContext) {
     const payload = await request.validateUsing(registerUserValidator)
 
     const token = crypto.randomUUID()
@@ -56,15 +56,19 @@ export default class UsersController {
     return response.redirect('/login')
   }
 
+  async edit({ params }: HttpContext) {
+
+  }
+
   async destroy({ auth, request, session, response }: HttpContext) {
     const user = auth.user!
     const password = request.input('password')
 
-    const isValidPassword = await hash.verify(user.password, password)
+    /*const isValidPassword = await hash.verify(user.password, password)
     if (!isValidPassword) {
       session.flash('error', 'Mot de passe incorrect')
       return response.redirect().back()
-    }
+    }*/
 
     // Supprimer les tokens remember_me
     await Database.from('remember_me_tokens').where('user_id', user.id).delete()

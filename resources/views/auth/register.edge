@@ -6,7 +6,7 @@
 @slot('main')
   <h1>Inscription</h1>
 
-  @if(flashMessages.get('error'))
+  @if(flashMessages.has('error'))
     <p style="color: red">{{ flashMessages.get('error') }}</p>
   @endif
 
