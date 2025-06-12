@@ -2,10 +2,10 @@ import { BaseMail } from '@adonisjs/mail'
 import mail from '@adonisjs/mail/services/main'
 import User from '#models/user'
 
-export default class PasswordResetLink extends BaseMail {
+export default class PasswordResetMail extends BaseMail {
   
   static sendTo(user: User, host: string) {
-    return mail.send(new PasswordResetLink(user, host))
+    return mail.send(new PasswordResetMail(user, host))
   }
   
   constructor(
@@ -21,7 +21,7 @@ export default class PasswordResetLink extends BaseMail {
   prepare() {
     this.message
       .to(this.user.email)
-      .htmlView('emails/reset_password', {
+      .htmlView('emails/password_reset', {
         user: this.user,
         host: this.host,
       })

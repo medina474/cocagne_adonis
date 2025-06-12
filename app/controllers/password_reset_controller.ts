@@ -3,7 +3,7 @@ import User from '#models/user'
 import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
 import { registerUserValidator } from '#validators/register_user'
-import PasswordResetlink from '#mails/password_reset_link'
+import PasswordResetMail from '#mails/password_reset_mail'
 
 export default class PasswordResetController {
   async showForgotForm({ view }: HttpContext) {
@@ -16,10 +16,9 @@ export default class PasswordResetController {
 
     if (user) {
       user.resetToken = crypto.randomUUID()
-      user.resetTokenExpiresAt = DateTime.utc().plus({ hours: 1 })
       await user.save()
 
-      PasswordResetlink.sendTo(user, `${request.protocol()}://${request.host()}`)
+      PasswordResetMail.sendTo(user, `${request.protocol()}://${request.host()}`)
     }
 
     // Toujours afficher ce message pour éviter de révéler si un email existe
@@ -36,7 +35,7 @@ export default class PasswordResetController {
 
     const user = await User.findBy('resetToken', params.token)
 
-    if (!user || !user.resetTokenExpiresAt || user.resetTokenExpiresAt < DateTime.utc()) {
+    if (!user) {
       session.flash('error', 'Lien invalide ou expiré.')
       return response.redirect('/forgot-password')
     }
@@ -48,7 +47,7 @@ export default class PasswordResetController {
     const { token, password } = request.only(['token', 'password'])
     const user = await User.findBy('resetToken', token)
 
-    if (!user || !user.resetTokenExpiresAt || user.resetTokenExpiresAt < DateTime.utc()) {
+    if (!user) {
       session.flash('error', 'Lien invalide ou expiré.')
       return response.redirect('/forgot-password')
     }
@@ -59,7 +58,6 @@ export default class PasswordResetController {
     
     user.password = password
     user.resetToken = null
-    user.resetTokenExpiresAt = null
     await user.save()
 
     session.flash('info', 'Mot de passe réinitialisé.')

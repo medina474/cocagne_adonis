@@ -26,8 +26,4 @@ export default class SessionsController {
     await auth.use('web').logout()
     return response.redirect('/')
   }
-
-  async verify() {
-    
-  }
 }

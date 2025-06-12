@@ -26,17 +26,12 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   public verificationToken?: string | null
 
-  @column.dateTime()
-  public verificationTokenExpiresAt?: DateTime | null
 
   @column()
   public emailVerifiedAt?: DateTime | null
 
   @column()
   public resetToken?: string | null
-
-  @column.dateTime()
-  public resetTokenExpiresAt?: DateTime | null
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

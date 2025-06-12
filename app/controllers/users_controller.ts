@@ -4,42 +4,40 @@ import User from '#models/user'
 import { registerUserValidator } from '#validators/register_user'
 import db from '@adonisjs/lucid/services/db'
 import hash from '@adonisjs/core/services/hash'
-import VerifyEmail from '#mails/verify_email_notification'
+import VerifyEmailMail from '#mails/verify_email_mail'
 
 export default class UsersController {
   async register({ request, response, session }: HttpContext) {
     const payload = await request.validateUsing(registerUserValidator)
 
     const token = crypto.randomUUID()
-    const expiresAt = DateTime.utc().plus({ hours: 24 })
 
     const user = await User.create({
       ...payload,
-      verificationToken: token,
-      verificationTokenExpiresAt: expiresAt,
+      verificationToken: token
     })
 
-    VerifyEmail.sendTo(user, token, `${request.protocol()}://${request.host()}`)
+    VerifyEmailMail.sendTo(user, token, `${request.protocol()}://${request.host()}`)
 
     session.flash('info', 'Un lien de vérification a été envoyé.')
     return response.redirect('/login')
   }
 
-  async verifyEmail({ params, response, session }: HttpContext) {
+  async verifyEmail({ params, response, session, request }: HttpContext) {
+    
+    if (!request.hasValidSignature()) {
+      session.flash('error', 'Lien invalide ou expiré.')
+      return response.redirect('/forgot-password')
+    }
+
     const user = await User.findBy('verificationToken', params.token)
 
     if (!user) {
       session.flash('error', 'Lien invalide.')
-      return response.redirect('/login')
-    }
-
-    if (!user.verificationTokenExpiresAt || user.verificationTokenExpiresAt < DateTime.utc()) {
-      session.flash('error', 'Le lien a expiré.')
-      return response.redirect('/resend-verification')
+      return response.redirect('/reset-password')
     }
 
     user.verificationToken = null
-    user.verificationTokenExpiresAt = null
     user.emailVerifiedAt = DateTime.utc()
     await user.save()
 
@@ -75,7 +73,6 @@ export default class UsersController {
     user.password = crypto.randomUUID()
     user.emailVerifiedAt = null
     user.resetToken = null
-    user.resetTokenExpiresAt = null
     user.deletedAt = DateTime.now()
     await user.save()
     

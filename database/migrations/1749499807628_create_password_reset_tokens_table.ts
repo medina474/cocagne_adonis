@@ -6,13 +6,12 @@ export default class extends BaseSchema {
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
       table.string('reset_token').nullable()
-      table.timestamp('reset_token_expires_at').nullable()
     })
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumns('reset_token', 'reset_token_expires_at')
+      table.dropColumns('reset_token')
     })
   }
 }
