@@ -3,6 +3,8 @@ import User from '#models/user'
 import mail from '@adonisjs/mail/services/main'
 import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
+import { registerUserValidator } from '#validators/register_user'
+import PasswordResetlink from '#mails/password_reset_link'
 
 export default class PasswordResetController {
   async showForgotForm({ view }: HttpContext) {
@@ -17,6 +19,8 @@ export default class PasswordResetController {
       user.resetToken = crypto.randomUUID()
       user.resetTokenExpiresAt = DateTime.utc().plus({ hours: 1 })
       await user.save()
+
+      await mail.send(new PasswordResetlink(user, token, `${request.protocol()}://${request.host()}`))
 
       await mail.send((message) => {
         message
@@ -61,6 +65,8 @@ export default class PasswordResetController {
       session.flash('error', 'Lien invalide ou expiré.')
       return response.redirect('/forgot-password')
     }
+
+    const payload = await request.validateUsing(registerUserValidator)
 
     await db.from('remember_me_tokens').where('tokenable_id', user.id).delete()
     

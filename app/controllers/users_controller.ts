@@ -6,7 +6,7 @@ import mail from '@adonisjs/mail/services/main'
 import db from '@adonisjs/lucid/services/db'
 import logger from '@adonisjs/core/services/logger'
 import hash from '@adonisjs/core/services/hash'
-import VerifyEmail from 'App/Mails/VerifyEmail'
+import VerifyEmail from '#mails/verify_email_notification'
 
 export default class UsersController {
   async register({ request, response, session }: HttpContext) {
