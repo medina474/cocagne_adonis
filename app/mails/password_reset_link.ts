@@ -1,7 +1,7 @@
 import { BaseMail } from '@adonisjs/mail'
 import User from '#models/user'
 
-export default class VerifyEmailNotification extends BaseMail {
+export default class PasswordResetLink extends BaseMail {
   
   /*
   static sendTo(user: User, token: string, host: string) {
@@ -11,7 +11,6 @@ export default class VerifyEmailNotification extends BaseMail {
   
   constructor(
     private user: User,
-    private token: string,
     private host: string
   ) {
     super()
@@ -23,9 +22,8 @@ export default class VerifyEmailNotification extends BaseMail {
   prepare() {
     this.message
       .to(this.user.email)
-      .htmlView('emails/verify_email', {
+      .htmlView('emails/reset_password', {
         user: this.user,
-        token: this.token,
         host: this.host,
       })
   }
