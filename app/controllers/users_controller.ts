@@ -2,9 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
 import User from '#models/user'
 import { registerUserValidator } from '#validators/register_user'
-import mail from '@adonisjs/mail/services/main'
 import db from '@adonisjs/lucid/services/db'
-import logger from '@adonisjs/core/services/logger'
 import hash from '@adonisjs/core/services/hash'
 import VerifyEmail from '#mails/verify_email_notification'
 
@@ -21,7 +19,7 @@ export default class UsersController {
       verificationTokenExpiresAt: expiresAt,
     })
 
-    await mail.send(new VerifyEmail(user, token, `${request.protocol()}://${request.host()}`))
+    VerifyEmail.sendTo(user, token, `${request.protocol()}://${request.host()}`)
 
     session.flash('info', 'Un lien de vérification a été envoyé.')
     return response.redirect('/login')

@@ -1,13 +1,12 @@
 import { BaseMail } from '@adonisjs/mail'
+import mail from '@adonisjs/mail/services/main'
 import User from '#models/user'
 
 export default class VerifyEmailNotification extends BaseMail {
   
-  /*
   static sendTo(user: User, token: string, host: string) {
-    return mail.send(new VerifyEmail(user, token, host))
+    return mail.send(new VerifyEmailNotification(user, token, host))
   }
-  */
   
   constructor(
     private user: User,

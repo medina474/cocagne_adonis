@@ -1,6 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
-import mail from '@adonisjs/mail/services/main'
 import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
 import { registerUserValidator } from '#validators/register_user'
@@ -20,19 +19,7 @@ export default class PasswordResetController {
       user.resetTokenExpiresAt = DateTime.utc().plus({ hours: 1 })
       await user.save()
 
-      await mail.send(new PasswordResetlink(user, token, `${request.protocol()}://${request.host()}`))
-
-      await mail.send((message) => {
-        message
-          .to(user.email)
-          .from('noreply@example.com')
-          .subject('Réinitialisation du mot de passe')
-          .htmlView('emails/reset_password', {
-            user,
-            token: user.resetToken,
-            request,
-          })
-      })
+      PasswordResetlink.sendTo(user, `${request.protocol()}://${request.host()}`)
     }
 
     // Toujours afficher ce message pour éviter de révéler si un email existe

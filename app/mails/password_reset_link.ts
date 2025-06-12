@@ -1,13 +1,12 @@
 import { BaseMail } from '@adonisjs/mail'
+import mail from '@adonisjs/mail/services/main'
 import User from '#models/user'
 
 export default class PasswordResetLink extends BaseMail {
   
-  /*
-  static sendTo(user: User, token: string, host: string) {
-    return mail.send(new VerifyEmail(user, token, host))
+  static sendTo(user: User, host: string) {
+    return mail.send(new PasswordResetLink(user, host))
   }
-  */
   
   constructor(
     private user: User,
@@ -17,7 +16,7 @@ export default class PasswordResetLink extends BaseMail {
   }
   
   from = 'noreply@example.com'
-  subject = 'Confirmez votre adresse email'
+  subject = 'Réinitialisation du mot de passe'
 
   prepare() {
     this.message
