@@ -6,6 +6,7 @@ import mail from '@adonisjs/mail/services/main'
 import db from '@adonisjs/lucid/services/db'
 import logger from '@adonisjs/core/services/logger'
 import hash from '@adonisjs/core/services/hash'
+import VerifyEmail from 'App/Mails/VerifyEmail'
 
 export default class UsersController {
   async register({ request, response, session }: HttpContext) {
@@ -20,17 +21,7 @@ export default class UsersController {
       verificationTokenExpiresAt: expiresAt,
     })
 
-    await mail.send((message) => {
-      message
-        .to(user.email)
-        .from('noreply@example.com')
-        .subject('Confirmez votre adresse email')
-        .htmlView('emails/verify_email', {
-          user,
-          token,
-          request,
-        })
-    })
+    await mail.send(new VerifyEmail(user, token, `${request.protocol()}://${request.host()}`))
 
     session.flash('info', 'Un lien de vérification a été envoyé.')
     return response.redirect('/login')
