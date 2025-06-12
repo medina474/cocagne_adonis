@@ -1,0 +1,45 @@
+# https://v5-docs.adonisjs.com/cookbooks/dockerizing-adonis
+name: adonis
+
+services:
+  postgres:
+    container_name: adonis-postgres
+    image: postgres:13
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+
+  redis:
+    container_name: adonis-redis
+    image: redis:${REDIS_VERSION:-7.2.5}
+    volumes:
+      - redis_volume:/data
+    ports:
+      - 6379:6379
+
+  adonis_app:
+    container_name: adonis_app
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+    build:
+      context: .
+      target: dependencies
+    ports:
+      - ${PORT:-8080}:${PORT:-8080}
+      - 9229:9229
+    environment:
+      - PG_HOST=postgres
+      - REDIS_HOST=redis
+    volumes:
+      - ./:/home/node/app
+    command: dumb-init node ace serve --watch --node-args="--inspect=0.0.0.0"
+
+volumes:
+  postgres_volume:
+  redis_volume:
