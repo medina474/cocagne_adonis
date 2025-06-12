@@ -30,7 +30,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   public verificationTokenExpiresAt?: DateTime | null
 
   @column()
-  public emailVerifiedAt?: DateTime
+  public emailVerifiedAt?: DateTime | null
 
   @column()
   public resetToken?: string | null

@@ -23,6 +23,7 @@ router.post('logout', [SessionsController, 'logout']).use(middleware.auth())
 router.get('register', async ({ view }) => view.render('auth/register'))
 router.post('register', [UsersController, 'register'])
 router.get('verify/:token', [UsersController, 'verifyEmail'])
+router.post('delete', [UsersController, 'destroy']).use(middleware.auth())
 
 router.get('forgot-password', [PasswordResetController, 'showForgotForm'])
 router.post('forgot-password', [PasswordResetController, 'sendResetLink'])

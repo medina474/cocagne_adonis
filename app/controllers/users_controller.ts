@@ -3,7 +3,9 @@ import { DateTime } from 'luxon'
 import User from '#models/user'
 import { registerUserValidator } from '#validators/register_user'
 import mail from '@adonisjs/mail/services/main'
-import Database from '@adonisjs/lucid/services/db'
+import db from '@adonisjs/lucid/services/db'
+import logger from '@adonisjs/core/services/logger'
+import hash from '@adonisjs/core/services/hash'
 
 export default class UsersController {
   async register({ request, response, session }: HttpContext) {
@@ -64,22 +66,30 @@ export default class UsersController {
     const user = auth.user!
     const password = request.input('password')
 
-    /*const isValidPassword = await hash.verify(user.password, password)
+    if (!password) {
+      session.flash('error', 'Mot de passe incorrect')
+      return response.redirect().back()
+    }
+
+    const isValidPassword = await hash.verify(user.password, password)
     if (!isValidPassword) {
       session.flash('error', 'Mot de passe incorrect')
       return response.redirect().back()
-    }*/
+    }
 
     // Supprimer les tokens remember_me
-    await Database.from('remember_me_tokens').where('user_id', user.id).delete()
+    await db.from('remember_me_tokens').where('tokenable_id', user.id).delete()
 
     // Anonymiser les infos personnelles
     user.email = `deleted_${user.id}@anonymized.local`
     user.fullName = '** Utilisateur supprimé'
     user.password = crypto.randomUUID()
+    user.emailVerifiedAt = null
+    user.resetToken = null
+    user.resetTokenExpiresAt = null
     user.deletedAt = DateTime.now()
-
     await user.save()
+    
     await auth.use('web').logout()
 
     session.flash('success', 'Votre compte a été supprimé')

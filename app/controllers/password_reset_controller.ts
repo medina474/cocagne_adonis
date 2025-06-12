@@ -2,9 +2,10 @@ import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import mail from '@adonisjs/mail/services/main'
 import { DateTime } from 'luxon'
+import db from '@adonisjs/lucid/services/db'
 
 export default class PasswordResetController {
-    async showForgotForm({ view }: HttpContext) {
+  async showForgotForm({ view }: HttpContext) {
     return view.render('auth/forgot-password')
   }
 
@@ -61,6 +62,8 @@ export default class PasswordResetController {
       return response.redirect('/forgot-password')
     }
 
+    await db.from('remember_me_tokens').where('tokenable_id', user.id).delete()
+    
     user.password = password
     user.resetToken = null
     user.resetTokenExpiresAt = null

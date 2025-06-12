@@ -18,12 +18,16 @@ export default class SessionsController {
       return response.redirect('/dashboard')
     } catch {
       session.flash('error', 'Email ou mot de passe incorrect.')
-      return response.redirect('/login')
+      return response.redirect().back()
     }
   }
 
   async logout({ auth, response }: HttpContext) {
     await auth.use('web').logout()
     return response.redirect('/')
+  }
+
+  async verify() {
+    
   }
 }
