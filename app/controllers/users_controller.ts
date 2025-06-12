@@ -2,21 +2,19 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
 import User from '#models/user'
 import { emailValidator } from '#validators/email_validator'
+import { passwordValidator } from '#validators/password_validator'
 import db from '@adonisjs/lucid/services/db'
 import hash from '@adonisjs/core/services/hash'
 import VerifyEmailMail from '#mails/verify_email_mail'
 
 export default class UsersController {
-  async register({ request, response, session }: HttpContext) {
+  async register({ request, response }: HttpContext) {
     const payload = await request.validateUsing(emailValidator)
-
     VerifyEmailMail.sendTo(payload.email, `${request.protocol()}://${request.host()}`)
-
-    session.flash('info', 'Un lien de vérification a été envoyé.')
-    return response.redirect('/login')
+    return response.redirect('wait_verify')
   }
 
-  async verifyEmail({ params, response, session, request }: HttpContext) {
+  async verifyEmail({ params, response, session, auth, request }: HttpContext) {
     
     if (!request.hasValidSignature()) {
       session.flash('error', 'Lien invalide ou expiré.')
@@ -29,9 +27,17 @@ export default class UsersController {
     })
 
     await user.save()
+    await auth.use('web').login(user)
 
-    session.flash('info', 'Email vérifié avec succès.')
-    return response.redirect('/login')
+    return response.redirect('/signin')
+  }
+
+  async signin({ response, auth, request }: HttpContext) {
+    const payload = await request.validateUsing(passwordValidator)
+    const user = auth.user!
+    user.password = payload.password
+    await user.save()
+    return response.redirect('dashboard')
   }
 
   async destroy({ auth, request, session, response }: HttpContext) {
@@ -56,7 +62,6 @@ export default class UsersController {
     user.email = `deleted_${user.id}@anonymized.local`
     user.fullName = '** Utilisateur supprimé'
     user.password = crypto.randomUUID()
-    user.emailVerifiedAt = null
     user.resetToken = null
     user.deletedAt = DateTime.now()
     await user.save()

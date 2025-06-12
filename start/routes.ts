@@ -16,13 +16,16 @@ import DepotsController from '#controllers/depots_controller'
 
 router.on('/').render('pages/home')
 
-router.get('login', [SessionsController, 'showLogin']).use(middleware.guest())
+router.on('login').render('sessions/login').use(middleware.guest())
 router.post('login', [SessionsController, 'login'])
 router.post('logout', [SessionsController, 'logout']).use(middleware.auth())
 
-router.get('register', async ({ view }) => view.render('auth/register'))
+router.on('register').render('auth/register').use(middleware.guest())
 router.post('register', [UsersController, 'register'])
+router.on('wait_verify').render('auth/wait_verify').use(middleware.guest())
 router.get('verify/:email', [UsersController, 'verifyEmail']).as('verify')
+router.on('signin').render('auth/signin').use(middleware.auth())
+router.post('signin', [UsersController, 'signin']).use(middleware.auth())
 router.post('delete', [UsersController, 'destroy']).use(middleware.auth())
 
 router.get('forgot-password', [PasswordResetController, 'showForgotForm'])

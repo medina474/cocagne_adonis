@@ -3,20 +3,11 @@ import User from '#models/user'
 
 export default class SessionsController {
 
-  async showLogin({ view }: HttpContext) {
-    return view.render('auth/login')
-  }
-
   async login({ request, response, auth, session }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
 
     try {
       const user = await User.verifyCredentials(email, password)
-
-      if (!user.emailVerifiedAt) {
-        session.flash('error', 'Vous devez vérifier votre email')
-        return response.redirect().back()
-      }
 
       await auth.use('web').login(user, !!request.input('remember_me'))
       return response.redirect('/dashboard')

@@ -1,8 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
-import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
-import { registerUserValidator } from '#validators/register_user'
+import { passwordValidator } from '#validators/password_validator'
 import PasswordResetMail from '#mails/password_reset_mail'
 
 export default class PasswordResetController {
@@ -44,7 +43,7 @@ export default class PasswordResetController {
   }
 
   async resetPassword({ request, response, session }: HttpContext) {
-    const { token, password } = request.only(['token', 'password'])
+    const { token } = request.only(['token'])
     const user = await User.findBy('resetToken', token)
 
     if (!user) {
@@ -52,11 +51,11 @@ export default class PasswordResetController {
       return response.redirect('/forgot-password')
     }
 
-    const payload = await request.validateUsing(registerUserValidator)
+    const payload = await request.validateUsing(passwordValidator)
 
     await db.from('remember_me_tokens').where('tokenable_id', user.id).delete()
     
-    user.password = password
+    user.password = payload.password
     user.resetToken = null
     await user.save()
 

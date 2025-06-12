@@ -1,6 +1,5 @@
 import { BaseMail } from '@adonisjs/mail'
 import mail from '@adonisjs/mail/services/main'
-import User from '#models/user'
 
 export default class VerifyEmailMail extends BaseMail {
   
