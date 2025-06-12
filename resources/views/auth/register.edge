@@ -3,8 +3,7 @@
     <meta name="description" content="A welcome page made with EdgeJS">
   @endslot
 
-@slot('main')
-  <h1>Inscription</h1>
+  <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Inscription</h2>
 
   @if(flashMessages.has('error'))
     <p style="color: red">{{ flashMessages.get('error') }}</p>
@@ -15,12 +14,9 @@
     <label>Email:</label>
     <input type="email" name="email" required />
 
-    <label>Mot de passe:</label>
-    <input type="password" name="password" required />
-
     <button type="submit">S’inscrire</button>
   </form>
 
   <p>Déjà un compte ? <a href="/login">Se connecter</a></p>
-  @endslot
+
 @end

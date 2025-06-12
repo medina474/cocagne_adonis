@@ -1,23 +1,16 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
 import User from '#models/user'
-import { registerUserValidator } from '#validators/register_user'
+import { emailValidator } from '#validators/email_validator'
 import db from '@adonisjs/lucid/services/db'
 import hash from '@adonisjs/core/services/hash'
 import VerifyEmailMail from '#mails/verify_email_mail'
 
 export default class UsersController {
   async register({ request, response, session }: HttpContext) {
-    const payload = await request.validateUsing(registerUserValidator)
+    const payload = await request.validateUsing(emailValidator)
 
-    const token = crypto.randomUUID()
-
-    const user = await User.create({
-      ...payload,
-      verificationToken: token
-    })
-
-    VerifyEmailMail.sendTo(user, token, `${request.protocol()}://${request.host()}`)
+    VerifyEmailMail.sendTo(payload.email, `${request.protocol()}://${request.host()}`)
 
     session.flash('info', 'Un lien de vérification a été envoyé.')
     return response.redirect('/login')
@@ -27,26 +20,18 @@ export default class UsersController {
     
     if (!request.hasValidSignature()) {
       session.flash('error', 'Lien invalide ou expiré.')
-      return response.redirect('/forgot-password')
+      return response.redirect('/register')
     }
 
-    const user = await User.findBy('verificationToken', params.token)
+    const user = await User.create({
+      email: params.email,
+      password: crypto.randomUUID() 
+    })
 
-    if (!user) {
-      session.flash('error', 'Lien invalide.')
-      return response.redirect('/reset-password')
-    }
-
-    user.verificationToken = null
-    user.emailVerifiedAt = DateTime.utc()
     await user.save()
 
     session.flash('info', 'Email vérifié avec succès.')
     return response.redirect('/login')
-  }
-
-  async edit({ params }: HttpContext) {
-
   }
 
   async destroy({ auth, request, session, response }: HttpContext) {

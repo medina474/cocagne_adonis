@@ -22,13 +22,13 @@ router.post('logout', [SessionsController, 'logout']).use(middleware.auth())
 
 router.get('register', async ({ view }) => view.render('auth/register'))
 router.post('register', [UsersController, 'register'])
-router.get('verify/:token', [UsersController, 'verifyEmail'])
+router.get('verify/:email', [UsersController, 'verifyEmail']).as('verify')
 router.post('delete', [UsersController, 'destroy']).use(middleware.auth())
 
 router.get('forgot-password', [PasswordResetController, 'showForgotForm'])
 router.post('forgot-password', [PasswordResetController, 'sendResetLink'])
 
-router.get('reset-password/:token', [PasswordResetController, 'showResetForm']) .as('reset.password')
+router.get('reset-password/:token', [PasswordResetController, 'showResetForm']).as('reset.password')
 router.post('reset-password', [PasswordResetController, 'resetPassword'])
 
 router.get('dashboard', async ({ view }) => view.render('pages/dashboard')) 

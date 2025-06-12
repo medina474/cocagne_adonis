@@ -4,13 +4,12 @@ import User from '#models/user'
 
 export default class VerifyEmailMail extends BaseMail {
   
-  static sendTo(user: User, token: string, host: string) {
-    return mail.send(new VerifyEmailMail(user, token, host))
+  static sendTo(email: string, host: string) {
+    return mail.send(new VerifyEmailMail(email, host))
   }
   
   constructor(
-    private user: User,
-    private token: string,
+    private email: string,
     private host: string
   ) {
     super()
@@ -21,10 +20,9 @@ export default class VerifyEmailMail extends BaseMail {
 
   prepare() {
     this.message
-      .to(this.user.email)
+      .to(this.email)
       .htmlView('emails/verify_email', {
-        user: this.user,
-        token: this.token,
+        email: this.email,
         host: this.host,
       })
   }

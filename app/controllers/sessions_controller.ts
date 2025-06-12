@@ -13,8 +13,12 @@ export default class SessionsController {
     try {
       const user = await User.verifyCredentials(email, password)
 
-      await auth.use('web').login(user, !!request.input('remember_me'))
+      if (!user.emailVerifiedAt) {
+        session.flash('error', 'Vous devez vérifier votre email')
+        return response.redirect().back()
+      }
 
+      await auth.use('web').login(user, !!request.input('remember_me'))
       return response.redirect('/dashboard')
     } catch {
       session.flash('error', 'Email ou mot de passe incorrect.')
