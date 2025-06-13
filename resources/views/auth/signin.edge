@@ -5,11 +5,15 @@
   @if(flashMessages.get('error'))
     <p style="color: red">{{ flashMessages.get('error') }}</p>
   @endif
-
-  <form method="POST">
+{{ token }}
+  <form method="POST" action="{{ route('signin') }}">
     {{ csrfField() }}
+    <input type="hidden" name="token" value="{{ token }}" />
     <label>Password:</label>
     <input type="password" name="password" required />
+
+    <label>Nom et prénom:</label>
+    <input type="text" name="fullname" required />
     <button type="submit">Login</button>
   </form>
 @end

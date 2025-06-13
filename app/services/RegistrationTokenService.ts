@@ -5,7 +5,7 @@ const SECRET = env.get('REGISTRATION_TOKEN_SECRET', 'votre-cle-secrete-super-lon
 
 export class RegistrationTokenService {
   static sign(payload: { email: string }): string {
-    return jwt.sign(payload, SECRET, { expiresIn: '10m' })
+    return jwt.sign(payload, SECRET, { expiresIn: '30m' })
   }
 
   static verify(token: string): { email: string } {

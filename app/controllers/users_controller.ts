@@ -6,6 +6,7 @@ import { passwordValidator } from '#validators/password_validator'
 import db from '@adonisjs/lucid/services/db'
 import hash from '@adonisjs/core/services/hash'
 import VerifyEmailMail from '#mails/verify_email_mail'
+import { RegistrationTokenService } from '#services/RegistrationTokenService'
 
 export default class UsersController {
   async register({ request, response }: HttpContext) {
@@ -14,29 +15,42 @@ export default class UsersController {
     return response.redirect('wait_verify')
   }
 
-  async verifyEmail({ params, response, session, auth, request }: HttpContext) {
+  async verifyEmail({ params, response, session, request }: HttpContext) {
     
     if (!request.hasValidSignature()) {
       session.flash('error', 'Lien invalide ou expiré.')
       return response.redirect('/register')
     }
 
-    const user = await User.create({
-      email: params.email,
-      password: crypto.randomUUID() 
-    })
+    const token = RegistrationTokenService.sign({ email: params.email })
 
-    await user.save()
-    await auth.use('web').login(user)
-
-    return response.redirect('/signin')
+    return response.redirect().toRoute('signin.form', { token })
   }
 
-  async signin({ response, auth, request }: HttpContext) {
+  async showSiginForm({ view, params }: HttpContext) {
+    return view.render("auth/signin", params)
+  }
+
+  async signin({ response, session, params, auth, request }: HttpContext) {
+
+    const token = request.input('token') || params.token
+    let data
+    try {
+      data = RegistrationTokenService.verify(token)
+    } catch {
+      session.flash('error', 'Lien invalide ou expiré.')
+      return response.redirect('/register')
+    }
+    
     const payload = await request.validateUsing(passwordValidator)
-    const user = auth.user!
-    user.password = payload.password
-    await user.save()
+
+    const user = await User.create({
+      email: data.email,
+      fullName: request.input('fullname'),
+      password: payload.password 
+    })
+
+    await auth.use('web').login(user)
     return response.redirect('dashboard')
   }
 

@@ -32,7 +32,7 @@ export default class PasswordResetController {
       return response.redirect('/forgot-password')
     }
 
-    const user = await User.findBy('resetToken', params.token)
+    const user = await User.find(params.id)
 
     if (!user) {
       session.flash('error', 'Lien invalide ou expiré.')
