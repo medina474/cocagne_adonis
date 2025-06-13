@@ -1,14 +1,12 @@
-@layout('layouts/main')
+@layout.main()
 
-@section('content')
   <h1>Modifier un dépôt</h1>
-  <form method="POST" action="/depots/{{ depot.id }}">
+  <form method="POST" action="/depots/{{ depot.id }}?_method=PUT">
     {{ csrfField() }}
-    @method('PUT')
     
     <label>Nom</label>
     <input type="text" name="depot" value="{{ depot.depot }}" />
     
     <button type="submit">Mettre à jour</button>
   </form>
-@endsection
+@end

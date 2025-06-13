@@ -2,8 +2,9 @@
 
   <h1>Dépôts</h1>
   
+  <ul>
   @each(depot in depots)
-    <li>{{ depot.depot }}</li>
+    <li>- {{ depot.depot }}</li>
   @endeach
-
+  </ul>
 @end

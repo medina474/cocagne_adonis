@@ -76,7 +76,6 @@ export default class UsersController {
     user.email = `deleted_${user.id}@anonymized.local`
     user.fullName = '** Utilisateur supprimé'
     user.password = crypto.randomUUID()
-    user.resetToken = null
     user.deletedAt = DateTime.now()
     await user.save()
     

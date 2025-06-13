@@ -3,6 +3,6 @@
   <body>
     <h1>Vérifiez votre adresse email</h1>
     <p>Merci pour votre inscription. Veuillez confirmer votre adresse email en cliquant sur le lien ci-dessous :</p>
-    <a href="{{ host }}{{signedRoute('verify', [email], { expiresIn: '30 minute' })}}">Confirmer mon email</a>
+    <a href="{{ host }}{{ signedRoute('verify', [email], { expiresIn: '30 minute' }) }}">Confirmer mon email</a>
   </body>
 </html>
