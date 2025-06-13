@@ -28,7 +28,7 @@ router.on('signin').render('auth/signin').use(middleware.auth())
 router.post('signin', [UsersController, 'signin']).use(middleware.auth())
 router.post('delete', [UsersController, 'destroy']).use(middleware.auth())
 
-router.get('forgot-password', [PasswordResetController, 'showForgotForm'])
+router.get('forgot-password', [PasswordResetController, 'showForgotForm']).use(middleware.guest())
 router.post('forgot-password', [PasswordResetController, 'sendResetLink'])
 
 router.get('reset-password/:token', [PasswordResetController, 'showResetForm']).as('reset.password')
