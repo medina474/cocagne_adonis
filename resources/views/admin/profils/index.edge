@@ -1,0 +1,15 @@
+@layout.main()
+
+  <h1>Profils</h1>
+
+  <ul>
+  @each(profil in profils)
+    <li><a href="{{ profil.id }}">{{ profil.profil }}</a>
+    <form method="POST" action="{{ route('profils.destroy', { id: profil.id }) }}?_method=DELETE">
+     {{ csrfField() }}
+  <button type="submit">Supprimer</button>
+</form>
+    </li>
+  @endeach
+  </ul>
+@end

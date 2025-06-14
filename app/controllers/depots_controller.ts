@@ -6,15 +6,15 @@ export default class DepotsController {
    * Display a list of resource
    */
   async index({ view }: HttpContext) {
-    const depots = Depot.all()
-    return view.render('depots/index', { depots })
+    const depots = await Depot.all()
+    return view.render('admin/depots/index', { depots })
   }
 
   /**
    * Display form to create a new record
    */
   async create({ view }: HttpContext) {
-    return view.render('depots/create')
+    return view.render('admin/depots/create')
   }
 
   /**
@@ -23,7 +23,7 @@ export default class DepotsController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['depot'])
     await Depot.create(data)
-    return response.redirect('/depots')
+    return response.redirect('/admin/depots')
   }
 
   /**
@@ -31,7 +31,7 @@ export default class DepotsController {
    */
   async show({ params, view }: HttpContext) {
     const depot = await Depot.findOrFail(params.id)
-    return view.render('depots/edit', { depot })
+    return view.render('admin/depots/show', { depot })
   }
 
   /**
@@ -39,18 +39,19 @@ export default class DepotsController {
    */
   async edit({ params, view }: HttpContext) {
     const depot = await Depot.findOrFail(params.id)
-    return view.render('depots/edit', { depot })
+    return view.render('admin/depots/edit', { depot })
   }
 
   /**
    * Handle form submission for the edit action
    */
   async update({ params, request, response }: HttpContext) {
+    //const isPatch = request.method() === 'PATCH'
     const depot = await Depot.findOrFail(params.id)
     const data = request.only(['depot'])
     depot.merge(data)
     await depot.save()
-    return response.redirect('/depots')
+    return response.redirect('/admin/depots')
   }
 
   /**
@@ -59,6 +60,6 @@ export default class DepotsController {
   async destroy({ params, response }: HttpContext) {
     const depot = await Depot.findOrFail(params.id)
     await depot.delete()
-    return response.redirect('/depots')
+    return response.redirect('/admin/depots')
   }
 }

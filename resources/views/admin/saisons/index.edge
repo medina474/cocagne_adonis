@@ -1,0 +1,15 @@
+@layout.main()
+
+  <h1>Dépôts</h1>
+
+  <ul>
+  @each(depot in depots)
+    <li><a href="{{ depot.id }}">{{ depot.depot }}</a>
+    <form method="POST" action="{{ route('depots.destroy', { id: depot.id }) }}?_method=DELETE">
+     {{ csrfField() }}
+  <button type="submit">Supprimer</button>
+</form>
+    </li>
+  @endeach
+  </ul>
+@end

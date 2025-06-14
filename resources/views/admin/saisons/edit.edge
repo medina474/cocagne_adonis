@@ -1,0 +1,12 @@
+@layout.main()
+
+  <h1>Modifier un dépôt</h1>
+  <form method="POST" action="/depots/{{ depot.id }}?_method=PUT">
+    {{ csrfField() }}
+
+    <label>Nom</label>
+    <input type="text" name="depot" value="{{ depot.depot }}" />
+
+    <button type="submit">Mettre à jour</button>
+  </form>
+@end
