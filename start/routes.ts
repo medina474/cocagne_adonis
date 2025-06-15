@@ -11,9 +11,12 @@ import { middleware } from '#start/kernel'
 import SessionsController from '#controllers/sessions_controller'
 import UsersController from '#controllers/users_controller'
 import PasswordResetController from '#controllers/password_reset_controller'
-import DepotsController from '#controllers/depots_controller'
+const DepotsController = () => import('#controllers/admin/depots_controller')
+const ApiDepotsController = () => import('#controllers/api/depots_controller')
 import SaisonsController from '#controllers/saisons_controller'
 import ProfilsController from '#controllers/profils_controller'
+import PreparationsController from '#controllers/preparations_controller'
+import CotisationsController from '#controllers/cotisations_controller'
 
 router.on('/').render('pages/home')
 
@@ -35,12 +38,16 @@ router.post('forgot-password', [PasswordResetController, 'sendResetLink'])
 router.get('reset-password/:email', [PasswordResetController, 'showResetForm']).as('reset.password')
 router.post('reset-password', [PasswordResetController, 'resetPassword'])
 
-router.get('dashboard', async ({ view }) => view.render('pages/dashboard'))
-  .use(middleware.auth())
+router.group(() => {
+  router.get('dashboard', async ({ view }) => view.render('admin/dashboard'))
+  router.resource('users', UsersController)
+  router.resource('profils', ProfilsController)
+  router.resource('depots', DepotsController).as('admin.depots')
+  router.resource('saisons', SaisonsController)
+  router.resource('cotisations', CotisationsController)
+  router.resource('preparations', PreparationsController)
+}).prefix('/admin').use(middleware.auth())
 
 router.group(() => {
-  router.resource('users', UsersController)
-  router.resource('depots', DepotsController)
-  router.resource('saison', SaisonsController)
-  router.resource('profils', ProfilsController)
-}).prefix('/admin').use(middleware.auth())
+  router.resource('depots', ApiDepotsController).as('api.depots').apiOnly()
+}).prefix('/api')

@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <title>{{ title || "Jardins de Cocagne" }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+</head>
+
+<body>
+  {{{ await $slots.main() }}}
+  <div id="table-utilisateurs"></div>
+
+  <script>
+    const table = new Tabulator("#table-utilisateurs", {
+      layout: "fitColumns",
+      height: "500px",
+      ajaxURL: "/api/depots",
+      columns: [
+        {formatter:"responsiveCollapse", width:40, hozAlign:"center", resizable:false, headerSort:false},
+        {title: "Dépôt", field: "depot", width: 150},
+        {title: "Capacité", field: "capacite"}
+      ],
+      responsiveLayout: "collapse",
+      rowFormatter: function(row) {
+        const data = row.getData();
+
+        // Crée un conteneur pour les détails
+        const holderEl = document.createElement("div");
+        holderEl.style.padding = "10px";
+        holderEl.style.background = "#f8f9fa";
+
+        // Contenu HTML du détail (personnalisable)
+        holderEl.innerHTML = `
+          <strong>ID :</strong> ${data.id} <br>
+          <strong>Téléphone :</strong> ${data.telephone ?? 'Non renseigné'} <br>
+          <strong>Adresse :</strong> ${data.adresse ?? 'Non renseignée'}
+        `;
+
+        // Ajoute le détail dans la ligne
+        row.getElement().appendChild(holderEl);
+      }
+    });
+  </script>
+</body>
+
+</html>

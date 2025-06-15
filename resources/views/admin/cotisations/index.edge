@@ -1,0 +1,15 @@
+@layout.main()
+
+  <h1>Saisons</h1>
+
+  <ul>
+  @each(saison in saisons)
+    <li><a href="{{ saison.id }}">{{ saison.saison }}</a>
+    <form method="POST" action="{{ route('admin_depots.destroy', { id: saison.id }) }}?_method=DELETE">
+     {{ csrfField() }}
+  <button type="submit">Supprimer</button>
+</form>
+    </li>
+  @endeach
+  </ul>
+@end

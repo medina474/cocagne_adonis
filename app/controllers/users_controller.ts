@@ -16,7 +16,7 @@ export default class UsersController {
   }
 
   async verifyEmail({ params, response, session, request }: HttpContext) {
-    
+
     if (!request.hasValidSignature()) {
       session.flash('error', 'Lien invalide ou expiré.')
       return response.redirect('/register')
@@ -41,17 +41,17 @@ export default class UsersController {
       session.flash('error', 'Lien invalide ou expiré.')
       return response.redirect('/register')
     }
-    
+
     const payload = await request.validateUsing(passwordValidator)
 
     const user = await User.create({
       email: data.email,
       fullName: request.input('fullname'),
-      password: payload.password 
+      password: payload.password
     })
 
     await auth.use('web').login(user)
-    return response.redirect('dashboard')
+    return response.redirect('admin/dashboard')
   }
 
   async destroy({ auth, request, session, response }: HttpContext) {
@@ -78,7 +78,7 @@ export default class UsersController {
     user.password = crypto.randomUUID()
     user.deletedAt = DateTime.now()
     await user.save()
-    
+
     await auth.use('web').logout()
 
     session.flash('success', 'Votre compte a été supprimé')

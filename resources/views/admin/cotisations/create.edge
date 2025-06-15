@@ -1,0 +1,12 @@
+@layout.main()
+
+  <h1>Ajouter un dépôt</h1>
+  <form method="POST" action="/depots">
+    {{ csrfField() }}
+    
+    <label>Nom</label>
+    <input type="text" name="depot" value="" />
+    
+    <button type="submit">Ajouter</button>
+  </form>
+@end

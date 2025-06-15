@@ -1,0 +1,31 @@
+@layout.app({ title: "Dashboard" })
+ @slot('meta')
+    <meta name="description" content="Dashboard">
+  @endslot
+  @slot('main')
+    <h1>Bienvenue sur le Dashboard</h1>
+    <p>Vous êtes connecté.</p>
+    @if(auth.isAuthenticated)
+      <p> Hello {{ auth.user.email }} </p>
+    @end
+
+    <form method="POST" action="/logout">
+      {{ csrfField() }}
+      <button type="submit">Se déconnecter</button>
+    </form>
+
+    <form method="POST" action="/delete">
+      {{ csrfField() }}
+      <input type="password" name="password" required="">
+      <button type="submit">Supprimer mon compte</button>
+    </form>
+
+    <ul>
+    <li><a href='/admin/profils'>Profils</a></li>
+    <li><a href='/admin/depots'>Dépôts</a></li>
+    <li><a href='/admin/saisons'>Saison</a></li>
+    <li><a href='/admin/calendriers'>Calendriers</a></li>
+    <li><a href='/admin/preparations'>Préparation</a></li>
+    </ul>
+  @endslot
+@end
