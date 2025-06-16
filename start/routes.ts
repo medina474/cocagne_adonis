@@ -13,7 +13,8 @@ import UsersController from '#controllers/users_controller'
 import PasswordResetController from '#controllers/password_reset_controller'
 const DepotsController = () => import('#controllers/admin/depots_controller')
 const ApiDepotsController = () => import('#controllers/api/depots_controller')
-import SaisonsController from '#controllers/saisons_controller'
+import SaisonsController from '#controllers/admin/saisons_controller'
+import FermeturesController from '#controllers/admin/fermetures_controller'
 import ProfilsController from '#controllers/profils_controller'
 import PreparationsController from '#controllers/preparations_controller'
 import CotisationsController from '#controllers/cotisations_controller'
@@ -43,11 +44,14 @@ router.group(() => {
   router.resource('users', UsersController)
   router.resource('profils', ProfilsController)
   router.resource('depots', DepotsController).as('admin.depots')
-  router.resource('saisons', SaisonsController)
+  router.resource('saisons', SaisonsController).as('admin.saisons')
+  router.resource('fermetures', FermeturesController).as('admin.fermetures')
   router.resource('cotisations', CotisationsController)
   router.resource('preparations', PreparationsController)
 }).prefix('/admin').use(middleware.auth())
 
 router.group(() => {
   router.resource('depots', ApiDepotsController).as('api.depots').apiOnly()
+  router.resource('saisons', ApiDepotsController).as('api.saisons').apiOnly()
+  router.resource('fermetures', ApiDepotsController).as('api.fermetures').apiOnly()
 }).prefix('/api')
