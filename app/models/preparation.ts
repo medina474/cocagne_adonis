@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class Preparation extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ columnName: 'preparation_id', isPrimary: true })
   declare id: number
 
   @column.dateTime({ autoCreate: true })

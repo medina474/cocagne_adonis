@@ -22,9 +22,9 @@ export default class distributionsController {
    * Handle form submission for the create action
    */
   async store({ request, response }: HttpContext) {
-    const data = request.only(['cotisation'])
-    await Cotisation.create(data)
-    return response.redirect('/admin/distributions')
+    const data = request.only(['distribution'])
+    //await Cotisation.create(data)
+    return response.redirect().toRoute('admin.distributions.index')
   }
 
   /**
@@ -50,9 +50,9 @@ export default class distributionsController {
     //const isPatch = request.method() === 'PATCH'
     const depot = await Distribution.findOrFail(params.id)
     const data = request.only(['depot'])
-    depot.merge(data)
+    //depot.merge(data)
     await depot.save()
-    return response.redirect('/admin/distributions')
+    return response.redirect().toRoute('admin.distributions.index')
   }
 
   /**
@@ -61,6 +61,6 @@ export default class distributionsController {
   async destroy({ params, response }: HttpContext) {
     const depot = await Depot.findOrFail(params.id)
     await depot.delete()
-    return response.redirect('/admin/distributions')
+    return response.redirect().toRoute('admin.distributions.index')
   }
 }

@@ -13,12 +13,13 @@ import UsersController from '#controllers/users_controller'
 import PasswordResetController from '#controllers/password_reset_controller'
 const DepotsController = () => import('#controllers/admin/depots_controller')
 const ApiDepotsController = () => import('#controllers/api/depots_controller')
-import SaisonsController from '#controllers/admin/saisons_controller'
-import FermeturesController from '#controllers/admin/fermetures_controller'
-import ProfilsController from '#controllers/profils_controller'
-import PreparationsController from '#controllers/preparations_controller'
-import CotisationsController from '#controllers/cotisations_controller'
-import TourneesController from '#controllers/tournees_controller'
+const SaisonsController = () => import('#controllers/admin/saisons_controller')
+const FermeturesController = () => import('#controllers/admin/fermetures_controller')
+const ProfilsController = () => import('#controllers/profils_controller')
+const PreparationsController = () => import('#controllers/preparations_controller')
+const CotisationsController = () => import('#controllers/cotisations_controller')
+const TourneesController = () => import('#controllers/tournees_controller')
+const CalendriersController = () => import('#controllers/calendriers_controller')
 
 router.on('/').render('pages/home')
 
@@ -47,6 +48,7 @@ router.group(() => {
   router.resource('depots', DepotsController).as('admin.depots')
   router.resource('saisons', SaisonsController).as('admin.saisons')
   router.resource('fermetures', FermeturesController).as('admin.fermetures')
+  router.resource('calendriers', CalendriersController).as('admin.calendriers')
   router.resource('cotisations', CotisationsController).as('admin.cotisations')
   router.resource('preparations', PreparationsController).as('admin.preparations')
   router.resource('tournees', TourneesController).as('admin.tournees')

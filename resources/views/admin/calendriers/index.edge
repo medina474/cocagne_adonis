@@ -2,8 +2,8 @@
 
   <h1>Calendriers</h1>
 
-  <ul>
-  @each(profil in profils)
+ <table>
+  @each(calendrier in calendriers)
     <li><a href="{{ route('admin_calendriers.show', { id: calendrier.id }) }}">{{ calendrier.calendrier }}</a>
     <form method="POST" action="{{ route('profils.destroy', { id: profil.id }) }}?_method=DELETE">
      {{ csrfField() }}
@@ -11,5 +11,5 @@
 </form>
     </li>
   @endeach
-  </ul>
+ </table>
 @end

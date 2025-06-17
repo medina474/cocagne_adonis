@@ -23,7 +23,7 @@ export default class FeriesController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['depot'])
     await Depot.create(data)
-    return response.redirect('/admin/feries')
+    return response.redirect().toRoute('admin.feries.index')
   }
 
   /**
@@ -51,7 +51,7 @@ export default class FeriesController {
     const data = request.only(['depot'])
     depot.merge(data)
     await depot.save()
-    return response.redirect('/admin/feries')
+    return response.redirect().toRoute('admin.feries.index')
   }
 
   /**
@@ -60,6 +60,6 @@ export default class FeriesController {
   async destroy({ params, response }: HttpContext) {
     const depot = await Depot.findOrFail(params.id)
     await depot.delete()
-    return response.redirect('/admin/feries')
+    return response.redirect().toRoute('admin.feries.index')
   }
 }

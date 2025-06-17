@@ -2,8 +2,11 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class Panier extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ columnName: 'panier_id', isPrimary: true })
   declare id: number
+
+  @column()
+  declare panier: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

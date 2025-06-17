@@ -23,7 +23,7 @@ export default class FermeturesController {
     async store({ request, response }: HttpContext) {
       const data = request.only(['semaine'])
       await Fermeture.create(data)
-      return response.redirect('/admin/fermetures')
+      return response.redirect().toRoute('admin.fermetures.index')
     }
 
     /**
@@ -51,7 +51,7 @@ export default class FermeturesController {
       const data = request.only(['semaine'])
       profil.merge(data)
       await profil.save()
-      return response.redirect('/admin/fermetures')
+      return response.redirect().toRoute('admin.fermetures.index')
     }
 
     /**
@@ -60,6 +60,6 @@ export default class FermeturesController {
     async destroy({ params, response }: HttpContext) {
       const depot = await Fermeture.findOrFail(params.id)
       await depot.delete()
-      return response.redirect('/admin/fermetures')
+      return response.redirect().toRoute('admin.fermetures.index')
     }
 }
