@@ -1,14 +1,14 @@
-@layout.main()
+@layout.admin("Saisons")
 
   <h1>Saisons</h1>
 
   <ul>
   @each(saison in saisons)
-    <li><a href="{{ route('admin_depots.show', { id: saison.id }) }}">{{ saison.saison }}</a>
-    <form method="POST" action="{{ route('admin_depots.destroy', { id: saison.id }) }}?_method=DELETE">
-     {{ csrfField() }}
-  <button type="submit">Supprimer</button>
-</form>
+    <li><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ saison.saison }}</a>
+    <form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
+      {{ csrfField() }}
+      <button type="submit">Supprimer</button>
+    </form>
     </li>
   @endeach
   </ul>

@@ -1,3 +1,4 @@
+import Fermeture from '#models/fermeture'
 import Saison from '#models/saison'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -30,16 +31,20 @@ export default class SaisonsController {
      * Show individual record
      */
     async show({ params, view }: HttpContext) {
-      const depot = await Saison.findOrFail(params.id)
-      return view.render('admin/saisons/show', { depot })
+      const saison = await Saison.query()
+        .preload('feries')
+        .preload('fermetures')
+        .where('saison', params.id)
+        .firstOrFail()
+      return view.render('admin/saisons/show', { saison })
     }
 
     /**
      * Edit individual record
      */
     async edit({ params, view }: HttpContext) {
-      const depot = await Saison.findOrFail(params.id)
-      return view.render('admin/saisons/edit', { depot })
+      const saison = await Saison.findOrFail(params.id)
+      return view.render('admin/saisons/edit', { saison })
     }
 
     /**

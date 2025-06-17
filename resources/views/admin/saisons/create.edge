@@ -1,7 +1,7 @@
-@layout.main()
+@layout.admin("Ajouter une saison")
 
-  <h1>Ajouter un dépôt</h1>
-  <form method="POST" action="/saisons">
+  <h1>Ajouter une saison</h1>
+  <form method="POST" action="{{ route('admin_saisons.create', { id: saison.id }) }}">
     {{ csrfField() }}
 
     <label>Nom</label>

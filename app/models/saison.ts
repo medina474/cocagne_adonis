@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Fermeture from './fermeture.js'
+import Ferie from './feries.js'
 
 export default class Saison extends BaseModel {
   @column({ columnName: 'saison_id', isPrimary: true })
@@ -18,4 +19,7 @@ export default class Saison extends BaseModel {
 
   @hasMany(() => Fermeture)
   declare fermetures: HasMany<typeof Fermeture>
+
+  @hasMany(() => Ferie)
+  declare feries: HasMany<typeof Ferie>
 }

@@ -1,0 +1,33 @@
+@layout.admin("Modifier la saison")
+
+  <h1>Modifier une saison</h1>
+
+  <form method="POST" action="{{ route('admin_saisons.update', { id: saison.id }) }}?_method=PUT">
+    {{ csrfField() }}
+
+    <label>Nom</label>
+    <input type="text" name="saison" value="{{ saison.saison }}" />
+
+    <button type="submit">Mettre à jour</button>
+  </form>
+
+  Fermetures
+
+    @each(fermeture in saison.fermetures)
+    <li><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ fermeture.semaine }}</a>
+    <form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
+      {{ csrfField() }}
+      <button type="submit">Supprimer</button>
+    </form>
+    </li>
+  @endeach
+Feries
+    @each(ferie in saison.feries)
+    <li><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ ferie.ferie }}</a>
+    <form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
+      {{ csrfField() }}
+      <button type="submit">Supprimer</button>
+    </form>
+    </li>
+  @endeach
+@end
