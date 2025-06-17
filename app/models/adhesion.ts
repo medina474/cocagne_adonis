@@ -8,14 +8,14 @@ export default class Adhesion extends BaseModel {
   @column({ columnName: 'adhesion_id', isPrimary: true })
   declare id: number
 
+  @belongsTo(() => Adherent)
+  declare adherent: BelongsTo<typeof Adherent>
+
   @column.dateTime()
   declare dateAdhesion: DateTime
 
   @column()
   declare montant: number
-
-  @belongsTo(() => Adherent)
-  declare adherent: BelongsTo<typeof Adherent>
 
   @belongsTo(() => Saison)
   declare panier: BelongsTo<typeof Saison>

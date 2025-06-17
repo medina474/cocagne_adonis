@@ -15,7 +15,7 @@ export default class Depot extends BaseModel {
   declare capacite: number
 
   @hasOne(() => Adresse)
-  declare profil: HasOne<typeof Adresse>
+  declare adresse: HasOne<typeof Adresse>
 
   @hasOne(() => Contact)
   declare contact: HasOne<typeof Contact>

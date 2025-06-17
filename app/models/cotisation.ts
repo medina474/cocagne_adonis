@@ -8,6 +8,9 @@ export default class Cotisation extends BaseModel {
   @column({ columnName: 'cotisation_id', isPrimary: true })
   declare id: number
 
+  @column()
+  declare saisonId: number
+  
   @belongsTo(() => Saison)
   declare saison: BelongsTo<typeof Saison>
 

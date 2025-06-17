@@ -1,4 +1,3 @@
-import Fermeture from '#models/fermeture'
 import Saison from '#models/saison'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -34,6 +33,7 @@ export default class SaisonsController {
       const saison = await Saison.query()
         .preload('feries')
         .preload('fermetures')
+        .preload('cotisations')
         .where('saison', params.id)
         .firstOrFail()
       return view.render('admin/saisons/show', { saison })

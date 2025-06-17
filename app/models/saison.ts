@@ -3,6 +3,7 @@ import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Fermeture from './fermeture.js'
 import Ferie from './feries.js'
+import Cotisation from './cotisation.js'
 
 export default class Saison extends BaseModel {
   @column({ columnName: 'saison_id', isPrimary: true })
@@ -22,4 +23,7 @@ export default class Saison extends BaseModel {
 
   @hasMany(() => Ferie)
   declare feries: HasMany<typeof Ferie>
+
+  @hasMany(() => Cotisation)
+  declare cotisations: HasMany<typeof Cotisation>
 }

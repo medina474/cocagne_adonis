@@ -21,10 +21,21 @@
     </form>
     </li>
   @endeach
+
 Feries
     @each(ferie in saison.feries)
     <li><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ ferie.ferie }}</a>
     <form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
+      {{ csrfField() }}
+      <button type="submit">Supprimer</button>
+    </form>
+    </li>
+  @endeach
+
+Cotisations
+    @each(cotisation in saison.cotisations)
+    <li><a href="{{ route('admin_cotisations.show', { id: cotisation.id }) }}">{{ cotisation.ferie }}</a>
+    <form method="POST" action="{{ route('admin_cotisations.destroy', { id: cotisation.id }) }}?_method=DELETE">
       {{ csrfField() }}
       <button type="submit">Supprimer</button>
     </form>
