@@ -4,8 +4,8 @@
 
   <ul>
   @each(saison in saisons)
-    <li><a href="{{ saison.id }}">{{ saison.saison }}</a>
-    <form method="POST" action="{{ route('admin_depots.destroy', { id: saison.id }) }}?_method=DELETE">
+    <li><a href="{{ route('admin_cotisations.show', { id: cotisation.id }) }}">{{ saison.saison }}</a>
+    <form method="POST" action="{{ route('admin_cotisations.destroy', { id: cotisation.id }) }}?_method=DELETE">
      {{ csrfField() }}
   <button type="submit">Supprimer</button>
 </form>

@@ -18,6 +18,7 @@ import FermeturesController from '#controllers/admin/fermetures_controller'
 import ProfilsController from '#controllers/profils_controller'
 import PreparationsController from '#controllers/preparations_controller'
 import CotisationsController from '#controllers/cotisations_controller'
+import TourneesController from '#controllers/tournees_controller'
 
 router.on('/').render('pages/home')
 
@@ -41,13 +42,14 @@ router.post('reset-password', [PasswordResetController, 'resetPassword'])
 
 router.group(() => {
   router.get('dashboard', async ({ view }) => view.render('admin/dashboard'))
-  router.resource('users', UsersController)
-  router.resource('profils', ProfilsController)
+  router.resource('users', UsersController).as('admin.users')
+  router.resource('profils', ProfilsController).as('admin.profils')
   router.resource('depots', DepotsController).as('admin.depots')
   router.resource('saisons', SaisonsController).as('admin.saisons')
   router.resource('fermetures', FermeturesController).as('admin.fermetures')
-  router.resource('cotisations', CotisationsController)
-  router.resource('preparations', PreparationsController)
+  router.resource('cotisations', CotisationsController).as('admin.cotisations')
+  router.resource('preparations', PreparationsController).as('admin.preparations')
+  router.resource('tournees', TourneesController).as('admin.tournees')
 }).prefix('/admin').use(middleware.auth())
 
 router.group(() => {

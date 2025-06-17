@@ -1,10 +1,10 @@
 @layout.main()
 
-  <h1>Profils</h1>
+  <h1>Préparations</h1>
 
   <ul>
   @each(profil in profils)
-    <li><a href="{{ profil.id }}">{{ profil.profil }}</a>
+    <li><a href="{{ route('admin_preparations.show', { id: preparation.id }) }}">{{ profil.profil }}</a>
     <form method="POST" action="{{ route('profils.destroy', { id: profil.id }) }}?_method=DELETE">
      {{ csrfField() }}
   <button type="submit">Supprimer</button>

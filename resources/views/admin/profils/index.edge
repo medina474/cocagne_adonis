@@ -2,14 +2,15 @@
 
   <h1>Profils</h1>
 
-  <ul>
+  <table>
   @each(profil in profils)
-    <li><a href="{{ profil.id }}">{{ profil.profil }}</a>
-    <form method="POST" action="{{ route('profils.destroy', { id: profil.id }) }}?_method=DELETE">
-     {{ csrfField() }}
-  <button type="submit">Supprimer</button>
-</form>
-    </li>
+  <tr>
+    <td><a href="{{ route('admin_profils.show', { id: saison.id }) }}">{{ profil.profil }}</a></td>
+    <td><form method="POST" action="{{ route('profils.destroy', { id: profil.id }) }}?_method=DELETE">
+    {{ csrfField() }}<button type="submit">Supprimer</button>
+    </form>
+    </td>
+  </tr>
   @endeach
-  </ul>
+</table>
 @end

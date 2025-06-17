@@ -1,15 +1,16 @@
 @layout.main()
 
-  <h1>Profils</h1>
+  <h1>Tournées</h1>
 
-  <ul>
-  @each(profil in profils)
-    <li><a href="{{ profil.id }}">{{ profil.profil }}</a>
-    <form method="POST" action="{{ route('profils.destroy', { id: profil.id }) }}?_method=DELETE">
-     {{ csrfField() }}
-  <button type="submit">Supprimer</button>
-</form>
-    </li>
-  @endeach
-  </ul>
+  <table>
+    @each(tournee in tournees)
+    <tr data-id="{{ tournee.id }}">
+      <td><a href="{{ route('admin_tournees.show', { id: tournee.id }) }}">{{ tournee.tournee }}</a></td>
+      <td><form method="POST" action="{{ route('admin_tournees.destroy', { id: tournee.id }) }}?_method=DELETE">
+      {{ csrfField() }}
+      <button type="submit">Supprimer</button>
+      </form></td>
+    </tr>
+    @endeach
+  </table>
 @end
