@@ -5,6 +5,9 @@ export default class Preparation extends BaseModel {
   @column({ columnName: 'preparation_id', isPrimary: true })
   declare id: number
 
+  @column()
+  declare preparation: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

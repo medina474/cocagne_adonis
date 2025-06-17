@@ -4,7 +4,7 @@
 
   <table>
   @each(depot in depots)
-    <tr><td><a href="{{ route('admin_depots.show', { id: depots.id }) }}">{{ depot.depot }}</a></td>
+    <tr><td><a href="{{ route('admin_depots.show', { id: depot.id }) }}">{{ depot.depot }}</a></td>
     <td><form method="POST" action="{{ route('admin_depots.destroy', { id: depot.id }) }}?_method=DELETE">
       {{ csrfField() }}
       <button type="submit">Supprimer</button>

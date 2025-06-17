@@ -2,14 +2,14 @@
 
   <h1>Saisons</h1>
 
-  <ul>
+  <table>
   @each(saison in saisons)
-    <li><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ saison.saison }}</a>
-    <form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
+    <tr><td><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ saison.saison }}</a></td>
+    <td><form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
       {{ csrfField() }}
       <button type="submit">Supprimer</button>
-    </form>
-    </li>
+    </form></td>
+  </tr>
   @endeach
-  </ul>
+  </table>
 @end

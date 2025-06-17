@@ -1,12 +1,12 @@
-@layout.main()
+@layout.admin()
 
   <h1>Profils</h1>
 
   <table>
   @each(profil in profils)
   <tr>
-    <td><a href="{{ route('admin_profils.show', { id: saison.id }) }}">{{ profil.profil }}</a></td>
-    <td><form method="POST" action="{{ route('profils.destroy', { id: profil.id }) }}?_method=DELETE">
+    <td><a href="{{ route('admin_profils.show', { id: profil.id }) }}">{{ profil.profil }}</a></td>
+    <td><form method="POST" action="{{ route('admin_profils.destroy', { id: profil.id }) }}?_method=DELETE">
     {{ csrfField() }}<button type="submit">Supprimer</button>
     </form>
     </td>

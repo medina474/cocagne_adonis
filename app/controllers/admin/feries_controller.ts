@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import Depot from '#models/feries'
+import Ferie from '#models/feries'
 
 export default class FeriesController {
   /**
@@ -21,8 +21,8 @@ export default class FeriesController {
    * Handle form submission for the create action
    */
   async store({ request, response }: HttpContext) {
-    const data = request.only(['depot'])
-    await Depot.create(data)
+    const data = request.only(['ferie'])
+    await Ferie.create(data)
     return response.redirect().toRoute('admin.feries.index')
   }
 
@@ -30,16 +30,16 @@ export default class FeriesController {
    * Show individual record
    */
   async show({ params, view }: HttpContext) {
-    const depot = await Depot.findOrFail(params.id)
-    return view.render('admin/feries/show', { depot })
+    const ferie = await Ferie.findOrFail(params.id)
+    return view.render('admin/feries/show', { ferie })
   }
 
   /**
    * Edit individual record
    */
   async edit({ params, view }: HttpContext) {
-    const depot = await Depot.findOrFail(params.id)
-    return view.render('admin/feries/edit', { depot })
+    const ferie = await Ferie.findOrFail(params.id)
+    return view.render('admin/feries/edit', { ferie })
   }
 
   /**
@@ -47,10 +47,10 @@ export default class FeriesController {
    */
   async update({ params, request, response }: HttpContext) {
     //const isPatch = request.method() === 'PATCH'
-    const depot = await Depot.findOrFail(params.id)
-    const data = request.only(['depot'])
-    depot.merge(data)
-    await depot.save()
+    const ferie = await Ferie.findOrFail(params.id)
+    const data = request.only(['ferie'])
+    ferie.merge(data)
+    await ferie.save()
     return response.redirect().toRoute('admin.feries.index')
   }
 
@@ -58,8 +58,8 @@ export default class FeriesController {
    * Delete record
    */
   async destroy({ params, response }: HttpContext) {
-    const depot = await Depot.findOrFail(params.id)
-    await depot.delete()
+    const ferie = await Ferie.findOrFail(params.id)
+    await ferie.delete()
     return response.redirect().toRoute('admin.feries.index')
   }
 }
