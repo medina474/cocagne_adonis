@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Tournee from '#models/tournee'
 
-export default class tourneesController {
+export default class TourneesController {
   /**
    * Display a list of resource
    */

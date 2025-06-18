@@ -1,8 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Distribution from '#models/distribution'
-import Cotisation from '#models/cotisation'
 
-export default class distributionsController {
+export default class DistributionsController {
   /**
    * Display a list of resource
    */
@@ -59,7 +58,7 @@ export default class distributionsController {
    * Delete record
    */
   async destroy({ params, response }: HttpContext) {
-    const depot = await Depot.findOrFail(params.id)
+    const depot = await Distribution.findOrFail(params.id)
     await depot.delete()
     return response.redirect().toRoute('admin.distributions.index')
   }

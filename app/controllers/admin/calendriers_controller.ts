@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Calendrier from '#models/calendrier'
 
-export default class calendriersController {
+export default class CalendriersController {
   /**
    * Display a list of resource
    */

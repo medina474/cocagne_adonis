@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Preparation from '#models/preparation'
 
-export default class preparationsController {
+export default class PreparationsController {
   /**
    * Display a list of resource
    */

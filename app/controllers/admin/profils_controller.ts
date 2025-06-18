@@ -54,9 +54,6 @@ export default class ProfilsController {
       return response.redirect().toRoute('admin.profils.index')
     }
 
-    /**
-     * Delete record
-     */
     async destroy({ params, response }: HttpContext) {
       const depot = await Profil.findOrFail(params.id)
       await depot.delete()

@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Adherent from '#models/calendrier'
 
-export default class adherentsController {
+export default class AdherentsController {
   /**
    * Display a list of resource
    */
@@ -23,7 +23,7 @@ export default class adherentsController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['calendrier'])
     await Adherent.create(data)
-    return response.redirect().toRoute('admin_adherents.index')
+    return response.redirect().toRoute('admin.adherents.index')
   }
 
   /**
@@ -51,7 +51,7 @@ export default class adherentsController {
     const data = request.only(['nom'])
     calendrier.merge(data)
     await calendrier.save()
-    return response.redirect().toRoute('admin_adherents.index')
+    return response.redirect().toRoute('admin.adherents.index')
   }
 
   /**
@@ -60,6 +60,6 @@ export default class adherentsController {
   async destroy({ params, response }: HttpContext) {
     const calendrier = await Adherent.findOrFail(params.id)
     await calendrier.delete()
-    return response.redirect().toRoute('admin_adherents.index')
+    return response.redirect().toRoute('admin.adherents.index')
   }
 }
