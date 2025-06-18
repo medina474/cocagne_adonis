@@ -23,7 +23,7 @@ export default class DepotsController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['depot'])
     await Depot.create(data)
-    return response.redirect().toRoute('admin.depots.index')
+    return response.redirect().toRoute('admin_depots.index')
   }
 
   /**
@@ -51,7 +51,7 @@ export default class DepotsController {
     const data = request.only(['depot'])
     depot.merge(data)
     await depot.save()
-    return response.redirect().toRoute('admin.depots.index')
+    return response.redirect().toRoute('admin_depots.index')
   }
 
   /**
@@ -60,6 +60,6 @@ export default class DepotsController {
   async destroy({ params, response }: HttpContext) {
     const depot = await Depot.findOrFail(params.id)
     await depot.delete()
-    return response.redirect().toRoute('admin.depots.index')
+    return response.redirect().toRoute('admin_depots.index')
   }
 }

@@ -23,7 +23,7 @@ export default class ModesPaiementController {
     async store({ request, response }: HttpContext) {
       const data = request.only(['semaine'])
       await ModePaiement.create(data)
-      return response.redirect().toRoute('admin.fermetures.index')
+      return response.redirect().toRoute('admin_fermetures.index')
     }
 
     /**
@@ -51,7 +51,7 @@ export default class ModesPaiementController {
       const data = request.only(['semaine'])
       profil.merge(data)
       await profil.save()
-      return response.redirect().toRoute('admin.fermetures.index')
+      return response.redirect().toRoute('admin_fermetures.index')
     }
 
     /**
@@ -60,6 +60,6 @@ export default class ModesPaiementController {
     async destroy({ params, response }: HttpContext) {
       const depot = await ModePaiement.findOrFail(params.id)
       await depot.delete()
-      return response.redirect().toRoute('admin.fermetures.index')
+      return response.redirect().toRoute('admin_fermetures.index')
     }
 }

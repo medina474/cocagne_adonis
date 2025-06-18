@@ -1,15 +1,14 @@
 @layout.main()
+<h1>Calendriers</h1>
 
-  <h1>Calendriers</h1>
-
- <table>
-  @each(calendrier in calendriers)
-    <li><a href="{{ route('admin_calendriers.show', { id: calendrier.id }) }}">{{ calendrier.calendrier }}</a>
-    <form method="POST" action="{{ route('admin_calendriers.destroy', { id: calendrier.id }) }}?_method=DELETE">
-     {{ csrfField() }}
-  <button type="submit">Supprimer</button>
-</form>
-    </li>
-  @endeach
- </table>
+<table>
+@each(calendrier in calendriers)
+  <tr><td><a href="{{ route('admin_calendriers.show', { id: calendrier.id }) }}">{{ calendrier.calendrier }}</a></td>
+    <td><form method="POST" action="{{ route('admin_calendriers.destroy', { id: calendrier.id }) }}?_method=DELETE">
+      {{ csrfField() }}
+      <button type="submit">Supprimer</button>
+    </form></td>
+  </tr>
+@endeach
+</table>
 @end

@@ -23,7 +23,7 @@ export default class CalendriersController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['calendrier'])
     await Calendrier.create(data)
-    return response.redirect().toRoute('admin.calendriers.index')
+    return response.redirect().toRoute('admin_calendriers.index')
   }
 
   /**
@@ -51,7 +51,7 @@ export default class CalendriersController {
     const data = request.only(['calendrier'])
     calendrier.merge(data)
     await calendrier.save()
-    return response.redirect().toRoute('admin.calendriers.index')
+    return response.redirect().toRoute('admin_calendriers.index')
   }
 
   /**
@@ -60,6 +60,6 @@ export default class CalendriersController {
   async destroy({ params, response }: HttpContext) {
     const calendrier = await Calendrier.findOrFail(params.id)
     await calendrier.delete()
-    return response.redirect().toRoute('admin.calendriers.index')
+    return response.redirect().toRoute('admin_calendriers.index')
   }
 }

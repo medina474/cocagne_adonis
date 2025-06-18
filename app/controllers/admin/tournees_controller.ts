@@ -23,7 +23,7 @@ export default class TourneesController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['tournee'])
     await Tournee.create(data)
-    return response.redirect().toRoute('admin.tournees.index')
+    return response.redirect().toRoute('admin_tournees.index')
   }
 
   /**
@@ -51,7 +51,7 @@ export default class TourneesController {
     const data = request.only(['tournee'])
     tournee.merge(data)
     await tournee.save()
-    return response.redirect().toRoute('admin.tournees.index')
+    return response.redirect().toRoute('admin_tournees.index')
   }
 
   /**
@@ -60,6 +60,6 @@ export default class TourneesController {
   async destroy({ params, response }: HttpContext) {
     const tournee = await Tournee.findOrFail(params.id)
     await tournee.delete()
-    return response.redirect().toRoute('admin.tournees.index')
+    return response.redirect().toRoute('admin_tournees.index')
   }
 }

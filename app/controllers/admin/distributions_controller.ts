@@ -23,7 +23,7 @@ export default class DistributionsController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['distribution'])
     //await Cotisation.create(data)
-    return response.redirect().toRoute('admin.distributions.index')
+    return response.redirect().toRoute('admin_distributions.index')
   }
 
   /**
@@ -51,7 +51,7 @@ export default class DistributionsController {
     const data = request.only(['depot'])
     //depot.merge(data)
     await depot.save()
-    return response.redirect().toRoute('admin.distributions.index')
+    return response.redirect().toRoute('admin_distributions.index')
   }
 
   /**
@@ -60,6 +60,6 @@ export default class DistributionsController {
   async destroy({ params, response }: HttpContext) {
     const depot = await Distribution.findOrFail(params.id)
     await depot.delete()
-    return response.redirect().toRoute('admin.distributions.index')
+    return response.redirect().toRoute('admin_distributions.index')
   }
 }

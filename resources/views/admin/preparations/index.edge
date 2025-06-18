@@ -1,15 +1,14 @@
 @layout.main()
+<h1>Préparations</h1>
 
-  <h1>Préparations</h1>
-
-  <ul>
+<table>
   @each(preparation in preparations)
-    <li><a href="{{ route('admin_preparations.show', { id: preparation.id }) }}">{{ preparation.preparation }}</a>
-    <form method="POST" action="{{ route('admin_preparations.destroy', { id: preparation.id }) }}?_method=DELETE">
-     {{ csrfField() }}
-  <button type="submit">Supprimer</button>
-</form>
+    <tr><td><a href="{{ route('admin_preparations.show', { id: preparation.id }) }}">{{ preparation.preparation }}</a></td>
+    <td><form method="POST" action="{{ route('admin_preparations.destroy', { id: preparation.id }) }}?_method=DELETE">
+      {{ csrfField() }}
+      <button type="submit">Supprimer</button>
+    </form></td>
     </li>
   @endeach
-  </ul>
+</table>
 @end

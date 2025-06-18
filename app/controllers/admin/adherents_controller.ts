@@ -23,7 +23,7 @@ export default class AdherentsController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['calendrier'])
     await Adherent.create(data)
-    return response.redirect().toRoute('admin.adherents.index')
+    return response.redirect().toRoute('admin_adherents.index')
   }
 
   /**
@@ -51,7 +51,7 @@ export default class AdherentsController {
     const data = request.only(['nom'])
     calendrier.merge(data)
     await calendrier.save()
-    return response.redirect().toRoute('admin.adherents.index')
+    return response.redirect().toRoute('admin_adherents.index')
   }
 
   /**
@@ -60,6 +60,6 @@ export default class AdherentsController {
   async destroy({ params, response }: HttpContext) {
     const calendrier = await Adherent.findOrFail(params.id)
     await calendrier.delete()
-    return response.redirect().toRoute('admin.adherents.index')
+    return response.redirect().toRoute('admin_adherents.index')
   }
 }

@@ -1,15 +1,14 @@
 @layout.main()
+<h1>Cotisations</h1>
 
-  <h1>Cotisations</h1>
-
-  <ul>
-  @each(saison in saisons)
-    <li><a href="{{ route('admin_cotisations.show', { id: cotisation.id }) }}">{{ saison.saison }}</a>
-    <form method="POST" action="{{ route('admin_cotisations.destroy', { id: cotisation.id }) }}?_method=DELETE">
-     {{ csrfField() }}
-  <button type="submit">Supprimer</button>
-</form>
-    </li>
-  @endeach
-  </ul>
+<table>
+@each(saison in saisons)
+  <tr><td><a href="{{ route('admin_cotisations.show', { id: cotisation.id }) }}">{{ saison.saison }}</a></td>
+    <td><form method="POST" action="{{ route('admin_cotisations.destroy', { id: cotisation.id }) }}?_method=DELETE">
+      {{ csrfField() }}
+      <button type="submit">Supprimer</button>
+    </form></td>
+  </tr>
+@endeach
+</table>
 @end

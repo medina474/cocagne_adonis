@@ -7,38 +7,37 @@
 
     <label>Nom</label>
     <input type="text" name="saison" value="{{ saison.saison }}" />
+    
 
     <button type="submit">Mettre à jour</button>
   </form>
 
-  Fermetures
+  <h2>Fermetures</h2>
 
+    <table>
     @each(fermeture in saison.fermetures)
-    <li><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ fermeture.semaine }}</a>
-    <form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
-      {{ csrfField() }}
-      <button type="submit">Supprimer</button>
-    </form>
-    </li>
+    <tr><td><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ fermeture.semaine }}</a></td>
+    <td>
+    </td>
+    </tr>
   @endeach
+</table>
 
 Feries
+<table>
     @each(ferie in saison.feries)
-    <li><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ ferie.ferie }}</a>
-    <form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
-      {{ csrfField() }}
-      <button type="submit">Supprimer</button>
-    </form>
-    </li>
+    <tr><td><a href="{{ route('admin_saisons.show', { id: saison.id }) }}">{{ ferie.ferie }}</a></td>
+    <td>
+    </td></tr>
   @endeach
+</table>
 
 Cotisations
+<table>
     @each(cotisation in saison.cotisations)
-    <li><a href="{{ route('admin_cotisations.show', { id: cotisation.id }) }}">{{ cotisation.ferie }}</a>
-    <form method="POST" action="{{ route('admin_cotisations.destroy', { id: cotisation.id }) }}?_method=DELETE">
-      {{ csrfField() }}
-      <button type="submit">Supprimer</button>
-    </form>
-    </li>
-  @endeach
+    <tr><td><a href="{{ route('admin_cotisations.show', { id: cotisation.id }) }}">{{ cotisation.ferie }}</a></td>
+    <td></td>
+  </td></tr>
+    @endeach
+    </table>
 @end

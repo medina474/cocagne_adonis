@@ -23,7 +23,7 @@ export default class PreparationsController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['preparation'])
     await Preparation.create(data)
-    return response.redirect().toRoute('admin.preparations.index')
+    return response.redirect().toRoute('admin_preparations.index')
   }
 
   /**
@@ -51,7 +51,7 @@ export default class PreparationsController {
     const data = request.only(['preparation'])
     calendrier.merge(data)
     await calendrier.save()
-    return response.redirect().toRoute('admin.preparations.index')
+    return response.redirect().toRoute('admin_preparations.index')
   }
 
   /**
@@ -60,6 +60,6 @@ export default class PreparationsController {
   async destroy({ params, response }: HttpContext) {
     const calendrier = await Preparation.findOrFail(params.id)
     await calendrier.delete()
-    return response.redirect().toRoute('admin.preparations.index')
+    return response.redirect().toRoute('admin_preparations.index')
   }
 }

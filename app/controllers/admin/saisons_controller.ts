@@ -23,7 +23,7 @@ export default class SaisonsController {
     async store({ request, response }: HttpContext) {
       const data = request.only(['saison'])
       await Saison.create(data)
-      return response.redirect().toRoute('admin.saisons.index')
+      return response.redirect().toRoute('admin_saisons.index')
     }
 
     /**
@@ -43,7 +43,12 @@ export default class SaisonsController {
      * Edit individual record
      */
     async edit({ params, view }: HttpContext) {
-      const saison = await Saison.findOrFail(params.id)
+      const saison = await Saison.query()
+        .preload('feries')
+        .preload('fermetures')
+        .preload('cotisations')
+        .where('saison', params.id)
+        .firstOrFail()
       return view.render('admin/saisons/edit', { saison })
     }
 
@@ -56,7 +61,7 @@ export default class SaisonsController {
       const data = request.only(['saison'])
       profil.merge(data)
       await profil.save()
-      return response.redirect().toRoute('admin.saisons.index')
+      return response.redirect().toRoute('admin_saisons.index')
     }
 
     /**
@@ -65,6 +70,6 @@ export default class SaisonsController {
     async destroy({ params, response }: HttpContext) {
       const depot = await Saison.findOrFail(params.id)
       await depot.delete()
-      return response.redirect().toRoute('admin.saisons.index')
+      return response.redirect().toRoute('admin_saisons.index')
     }
 }

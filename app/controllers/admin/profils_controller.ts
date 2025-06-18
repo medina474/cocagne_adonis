@@ -23,7 +23,7 @@ export default class ProfilsController {
     async store({ request, response }: HttpContext) {
       const data = request.only(['profil'])
       await Profil.create(data)
-      return response.redirect().toRoute('admin.profils.index')
+      return response.redirect().toRoute('admin_profils.index')
     }
 
     /**
@@ -51,12 +51,12 @@ export default class ProfilsController {
       const data = request.only(['profil'])
       profil.merge(data)
       await profil.save()
-      return response.redirect().toRoute('admin.profils.index')
+      return response.redirect().toRoute('admin_profils.index')
     }
 
     async destroy({ params, response }: HttpContext) {
       const depot = await Profil.findOrFail(params.id)
       await depot.delete()
-      return response.redirect().toRoute('admin.profils.index')
+      return response.redirect().toRoute('admin_profils.index')
     }
 }

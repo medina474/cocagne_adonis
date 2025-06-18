@@ -23,7 +23,7 @@ export default class paniersController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['panier'])
     await Panier.create(data)
-    return response.redirect().toRoute('admin.paniers.index')
+    return response.redirect().toRoute('admin_paniers.index')
   }
 
   /**
@@ -51,7 +51,7 @@ export default class paniersController {
     const data = request.only(['panier'])
     calendrier.merge(data)
     await calendrier.save()
-    return response.redirect().toRoute('admin.paniers.index')
+    return response.redirect().toRoute('admin_paniers.index')
   }
 
   /**
@@ -60,6 +60,6 @@ export default class paniersController {
   async destroy({ params, response }: HttpContext) {
     const calendrier = await Panier.findOrFail(params.id)
     await calendrier.delete()
-    return response.redirect().toRoute('admin.paniers.index')
+    return response.redirect().toRoute('admin_paniers.index')
   }
 }

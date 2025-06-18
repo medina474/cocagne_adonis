@@ -11,8 +11,8 @@ import { middleware } from '#start/kernel'
 import SessionsController from '#controllers/sessions_controller'
 import UsersController from '#controllers/users_controller'
 import PasswordResetController from '#controllers/password_reset_controller'
+// Admin
 const DepotsController = () => import('#controllers/admin/depots_controller')
-const ApiDepotsController = () => import('#controllers/api/depots_controller')
 const SaisonsController = () => import('#controllers/admin/saisons_controller')
 const FermeturesController = () => import('#controllers/admin/fermetures_controller')
 const ProfilsController = () => import('#controllers/admin/profils_controller')
@@ -20,6 +20,8 @@ const PreparationsController = () => import('#controllers/admin/preparations_con
 const CotisationsController = () => import('#controllers/admin/cotisations_controller')
 const TourneesController = () => import('#controllers/admin/tournees_controller')
 const CalendriersController = () => import('#controllers/admin/calendriers_controller')
+// API
+const ApiDepotsController = () => import('#controllers/api/depots_controller')
 
 router.on('/').render('pages/home')
 

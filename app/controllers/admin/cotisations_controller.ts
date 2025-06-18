@@ -24,7 +24,7 @@ export default class CotisationsController {
   async store({ request, response }: HttpContext) {
     const data = request.only(['cotisation'])
     await Cotisation.create(data)
-    return response.redirect().toRoute('admin.cotisations.index')
+    return response.redirect().toRoute('admin_cotisations.index')
   }
 
   /**
@@ -52,7 +52,7 @@ export default class CotisationsController {
     const data = request.only(['depot'])
     depot.merge(data)
     await depot.save()
-    return response.redirect().toRoute('admin.cotisations.index')
+    return response.redirect().toRoute('admin_cotisations.index')
   }
 
   /**
@@ -61,6 +61,6 @@ export default class CotisationsController {
   async destroy({ params, response }: HttpContext) {
     const depot = await Depot.findOrFail(params.id)
     await depot.delete()
-    return response.redirect().toRoute('admin.cotisations.index')
+    return response.redirect().toRoute('admin_cotisations.index')
   }
 }
