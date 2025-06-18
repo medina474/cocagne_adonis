@@ -47,10 +47,10 @@ export default class ModesPaiementController {
      */
     async update({ params, request, response }: HttpContext) {
       //const isPatch = request.method() === 'PATCH'
-      const profil = await ModePaiement.findOrFail(params.id)
+      const modePaiement = await ModePaiement.findOrFail(params.id)
       const data = request.only(['semaine'])
-      profil.merge(data)
-      await profil.save()
+      modePaiement.merge(data)
+      await modePaiement.save()
       return response.redirect().toRoute('admin_fermetures.index')
     }
 

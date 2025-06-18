@@ -49,7 +49,17 @@ export default class SaisonsController {
         .preload('cotisations')
         .where('saison', params.id)
         .firstOrFail()
-      return view.render('admin/saisons/edit', { saison })
+
+      const dates: string[] = []
+      let date = saison.dateDebut
+
+      while (date <= saison.dateFin) {
+        const iso = date.toISODate()
+        dates.push(iso!)
+        date = date.plus({ days: 1 })
+      }
+
+      return view.render('admin/saisons/edit', { saison, dates })
     }
 
     /**
@@ -57,10 +67,10 @@ export default class SaisonsController {
      */
     async update({ params, request, response }: HttpContext) {
       //const isPatch = request.method() === 'PATCH'
-      const profil = await Saison.findOrFail(params.id)
-      const data = request.only(['saison'])
-      profil.merge(data)
-      await profil.save()
+      const saison = await Saison.findOrFail(params.id)
+      const data = request.only(['saison', 'dateDebut', 'dateFin'])
+      saison.merge(data)
+      await saison.save()
       return response.redirect().toRoute('admin_saisons.index')
     }
 

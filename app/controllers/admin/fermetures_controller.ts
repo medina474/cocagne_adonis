@@ -47,10 +47,10 @@ export default class FermeturesController {
      */
     async update({ params, request, response }: HttpContext) {
       //const isPatch = request.method() === 'PATCH'
-      const profil = await Fermeture.findOrFail(params.id)
+      const fermeture = await Fermeture.findOrFail(params.id)
       const data = request.only(['semaine'])
-      profil.merge(data)
-      await profil.save()
+      fermeture.merge(data)
+      await fermeture.save()
       return response.redirect().toRoute('admin_fermetures.index')
     }
 

@@ -4,11 +4,14 @@
 
   <table>
   @each(saison in saisons)
-    <tr><td><a href="{{ route('admin_saisons.edit', { id: saison.id }) }}">{{ saison.saison }}</a></td>
-    <td><form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
-      {{ csrfField() }}
-      <button type="submit">Supprimer</button>
-    </form></td>
+    <tr>
+      <td><a href="{{ route('admin_saisons.edit', { id: saison.id }) }}">{{ saison.saison }}</a></td>
+      <td>{{ saison.dateDebut.toFormat('dd/MM/yyyy') }}</td>
+      <td>{{ saison.dateFin.toFormat('dd/MM/yyyy') }}</td>
+      <td><form method="POST" action="{{ route('admin_saisons.destroy', { id: saison.id }) }}?_method=DELETE">
+        {{ csrfField() }}
+        <button type="submit">Supprimer</button>
+      </form></td>
   </tr>
   @endeach
   </table>
