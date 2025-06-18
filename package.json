@@ -54,6 +54,7 @@
   "dependencies": {
     "@adonisjs/auth": "^9.4.0",
     "@adonisjs/core": "^6.18.0",
+    "@adonisjs/cors": "^2.2.1",
     "@adonisjs/i18n": "^2.2.0",
     "@adonisjs/lucid": "^21.6.1",
     "@adonisjs/mail": "^9.2.2",
@@ -68,7 +69,8 @@
     "luxon": "^3.6.1",
     "nanoid": "^5.1.5",
     "pg": "^8.16.0",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "tabulator-tables": "^6.3.1"
   },
   "hotHook": {
     "boundaries": [

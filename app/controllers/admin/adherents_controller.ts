@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import Adherent from '#models/calendrier'
+import Adherent from '#models/adherent'
 
 export default class AdherentsController {
   /**
@@ -21,7 +21,7 @@ export default class AdherentsController {
    * Handle form submission for the create action
    */
   async store({ request, response }: HttpContext) {
-    const data = request.only(['calendrier'])
+    const data = request.only(['adherent'])
     await Adherent.create(data)
     return response.redirect().toRoute('admin_adherents.index')
   }
@@ -48,7 +48,7 @@ export default class AdherentsController {
   async update({ params, request, response }: HttpContext) {
     //const isPatch = request.method() === 'PATCH'
     const calendrier = await Adherent.findOrFail(params.id)
-    const data = request.only(['nom'])
+    const data = request.only(['adherent'])
     calendrier.merge(data)
     await calendrier.save()
     return response.redirect().toRoute('admin_adherents.index')

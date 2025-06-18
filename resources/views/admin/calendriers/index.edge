@@ -6,7 +6,7 @@
   <tr><td><a href="{{ route('admin_calendriers.show', { id: calendrier.id }) }}">{{ calendrier.calendrier }}</a></td>
     <td><form method="POST" action="{{ route('admin_calendriers.destroy', { id: calendrier.id }) }}?_method=DELETE">
       {{ csrfField() }}
-      <button type="submit">Supprimer</button>
+      <button type="submit" onsubmit="return confirm('Voulez-vous vraiment supprimer ce calendrier ?')">Supprimer</button>
     </form></td>
   </tr>
 @endeach

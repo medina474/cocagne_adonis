@@ -11,7 +11,9 @@ import { middleware } from '#start/kernel'
 import SessionsController from '#controllers/sessions_controller'
 import UsersController from '#controllers/users_controller'
 import PasswordResetController from '#controllers/password_reset_controller'
+
 // Admin
+const AdherentsController = () => import('#controllers/admin/adherents_controller')
 const DepotsController = () => import('#controllers/admin/depots_controller')
 const SaisonsController = () => import('#controllers/admin/saisons_controller')
 const FermeturesController = () => import('#controllers/admin/fermetures_controller')
@@ -20,8 +22,10 @@ const PreparationsController = () => import('#controllers/admin/preparations_con
 const CotisationsController = () => import('#controllers/admin/cotisations_controller')
 const TourneesController = () => import('#controllers/admin/tournees_controller')
 const CalendriersController = () => import('#controllers/admin/calendriers_controller')
+
 // API
 const ApiDepotsController = () => import('#controllers/api/depots_controller')
+const ApiAdherentsController = () => import('#controllers/api/adherents_controller')
 
 router.on('/').render('pages/home')
 
@@ -46,6 +50,7 @@ router.post('reset-password', [PasswordResetController, 'resetPassword'])
 router.group(() => {
   router.get('dashboard', async ({ view }) => view.render('admin/dashboard'))
   router.resource('users', UsersController).as('admin.users')
+  router.resource('adherents', AdherentsController).as('admin.adherents')
   router.resource('profils', ProfilsController).as('admin.profils')
   router.resource('depots', DepotsController).as('admin.depots')
   router.resource('saisons', SaisonsController).as('admin.saisons')
@@ -57,7 +62,8 @@ router.group(() => {
 }).prefix('/admin').use(middleware.auth())
 
 router.group(() => {
+  router.resource('adherents', ApiAdherentsController).as('api.adherents').apiOnly()
   router.resource('depots', ApiDepotsController).as('api.depots').apiOnly()
   router.resource('saisons', ApiDepotsController).as('api.saisons').apiOnly()
   router.resource('fermetures', ApiDepotsController).as('api.fermetures').apiOnly()
-}).prefix('/api')
+}).prefix('/api').use(middleware.auth())
