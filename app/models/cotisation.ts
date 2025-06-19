@@ -14,6 +14,9 @@ export default class Cotisation extends BaseModel {
   @belongsTo(() => Saison)
   declare saison: BelongsTo<typeof Saison>
 
+  @column()
+  declare profilId: number
+
   @belongsTo(() => Profil)
   declare profil: BelongsTo<typeof Profil>
 

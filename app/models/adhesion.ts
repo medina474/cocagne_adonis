@@ -8,6 +8,9 @@ export default class Adhesion extends BaseModel {
   @column({ columnName: 'adhesion_id', isPrimary: true })
   declare id: number
 
+  @column()
+  declare adherentId: number
+
   @belongsTo(() => Adherent)
   declare adherent: BelongsTo<typeof Adherent>
 
@@ -17,6 +20,9 @@ export default class Adhesion extends BaseModel {
   @column()
   declare montant: number
 
+  @column()
+  declare saisonId: number
+  
   @belongsTo(() => Saison)
   declare panier: BelongsTo<typeof Saison>
 

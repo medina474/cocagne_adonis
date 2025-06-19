@@ -1,5 +1,41 @@
 @layout.main()
-<h1>Adhérents</h1>
+<h1>Ajouter un adhérent</h1>
+<form method="POST" action="{{ route('admin_adherents.store') }}">
+  {{ csrfField() }}
 
+  <div>
+    <label for="adherent">Nom</label>
+    <input type="text" id="adherent" name="adherent" value="" required />
+  </div>
+
+  <div>
+    <label for="profil_id">Profil</label>
+    <select id="adherent" name="profil_id" required>
+      <option value="">-- Choisir un profil --</option>
+        @each(profil in profils)
+          <option value="{{ profil.id }}">{{ profil.profil }}</option>
+        @end
+    </select>
+  </div>
+
+  <div>
+    <label for="adresse">Adresse</label>
+    <input type="text" id="adresse" name="adresse" value="" />
+  </div>
+
+  <div>
+    <label for="codepostal">Code postal</label>
+    <input type="text" id="codepostal" name="codepostal" value="" />
+  </div>
+
+  <div>
+    <label for="ville">Ville</label>
+    <input type="text" id="ville" name="ville" value="" />
+  </div>
+
+  <div>
+    <button type="submit">Ajouter</button>
+  </div>
+</form>
 
 @end

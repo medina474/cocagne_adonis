@@ -4,22 +4,35 @@ import Abonnement from './abonnement.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Distribution from './distribution.js'
 import Produit from './produit.js'
+import Planning from './planning.js'
 
 export default class Livraison extends BaseModel {
   @column({ columnName: 'livraison_id', isPrimary: true })
   declare id: number
 
+  @column()
+  declare abonnementId: number
+
   @belongsTo(() => Abonnement)
   declare saison: BelongsTo<typeof Abonnement>
+
+  @column()
+  declare distributionId: number
 
   @belongsTo(() => Distribution)
   declare distribution: BelongsTo<typeof Distribution>
 
+  @column()
+  declare produitId: number
+
   @belongsTo(() => Produit)
   declare produit: BelongsTo<typeof Produit>
 
-  @belongsTo(() => Abonnement)
-  declare planning: BelongsTo<typeof Abonnement>
+  @column()
+  declare planningId: number
+
+  @belongsTo(() => Planning)
+  declare planning: BelongsTo<typeof Planning>
 
   @column()
   declare qte: number

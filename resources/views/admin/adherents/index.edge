@@ -1,9 +1,19 @@
 @layout.admin()
 <h1>Adhérents</h1>
-<script>
-  window.tabulatorData = {{{ JSON.stringify(adherents) }}}
-</script>
-<div id="example-table"></div>
+
+<a href="{{ route('admin_adherents.create') }}">Ajouter un adhérent</a>
+
+<table>
+@each(adherent in adherents)
+  <tr><td><a href="{{ route('admin_adherents.show', { id: adherent.id }) }}">{{ adherent.adherent }}</a></td>
+    <td><form method="POST" action="{{ route('admin_adherents.destroy', { id: adherent.id }) }}?_method=DELETE">
+      {{ csrfField() }}
+      <button type="submit" onsubmit="return confirm('Voulez-vous vraiment supprimer ce adherent ?')">Supprimer</button>
+    </form></td>
+  </tr>
+@endeach
+</table>
+@end
 
 
 @end

@@ -10,6 +10,9 @@ export default class Calendrier extends BaseModel {
   @column()
   declare calendrier: string
 
+  @column()
+  declare saisonId: number
+  
   @belongsTo(() => Saison)
   declare panier: BelongsTo<typeof Saison>
 

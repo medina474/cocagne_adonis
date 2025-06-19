@@ -9,12 +9,21 @@ export default class Abonnement extends BaseModel {
   @column({ columnName: 'abonnement_id', isPrimary: true })
   declare id: number
 
+  @column()
+  declare adherentId: number
+
   @belongsTo(() => Adherent)
   declare adherent: BelongsTo<typeof Adherent>
+
+  @column()
+  declare panierId: number
 
   @belongsTo(() => Panier)
   declare panier: BelongsTo<typeof Panier>
 
+  @column()
+  declare saisonId: number
+  
   @belongsTo(() => Saison)
   declare saison: BelongsTo<typeof Saison>
 

@@ -14,6 +14,12 @@ export default class Adresse extends BaseModel {
   @column()
   declare ville: string
 
+  @column()
+  declare adherentId: number
+
+  @column()
+  declare depotId: number
+
   declare localisation: { lat: number, lng: number } | null
 
   @column.dateTime({ autoCreate: true })

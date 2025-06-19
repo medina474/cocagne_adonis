@@ -15,11 +15,20 @@ export default class Adherent extends BaseModel {
   @column()
   declare email: string
 
+  @column()
+  declare profilId: number
+
   @belongsTo(() => Profil)
   declare profil: BelongsTo<typeof Profil>
 
+  @column()
+  declare depotId: number
+
   @belongsTo(() => Depot)
   declare depot: BelongsTo<typeof Depot>
+
+  @column()
+  declare adresseId: number
 
   @hasOne(() => Adresse)
   declare adresse: HasOne<typeof Adresse>

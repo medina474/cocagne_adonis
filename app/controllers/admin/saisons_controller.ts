@@ -35,7 +35,7 @@ export default class SaisonsController {
         .preload('feries')
         .preload('fermetures')
         .preload('cotisations')
-        .where('saison', params.id)
+        .where('id', params.id)
         .firstOrFail()
       return view.render('admin/saisons/show', { saison })
     }
@@ -48,7 +48,7 @@ export default class SaisonsController {
         .preload('feries')
         .preload('fermetures')
         .preload('cotisations')
-        .where('saison', params.id)
+        .where('id', params.id)
         .firstOrFail()
 
      /* const dates: string[] = []
