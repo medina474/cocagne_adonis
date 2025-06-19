@@ -46,7 +46,6 @@ export default class UsersController {
 
     const user = await User.create({
       email: data.email,
-      fullName: request.input('fullname'),
       password: payload.password
     })
 
@@ -74,7 +73,6 @@ export default class UsersController {
 
     // Anonymiser les infos personnelles
     user.email = `deleted_${user.id}@anonymized.local`
-    user.fullName = '** Utilisateur supprimé'
     user.password = crypto.randomUUID()
     user.deletedAt = DateTime.now()
     await user.save()

@@ -9,11 +9,17 @@
   <form method="POST" action="{{ route('signin') }}">
     {{ csrfField() }}
     <input type="hidden" name="token" value="{{ token }}" />
-    <label>Password:</label>
-    <input type="password" name="password" required />
+    
+    <div>
+      <label>Password:</label>
+      <input type="password" name="password" required />
+    </div>
 
-    <label>Nom et prénom:</label>
-    <input type="text" name="fullname" required />
+    <div>
+      <label>Nom et prénom:</label>
+      <input type="text" name="adherent" required />
+    </div>
+
     <button type="submit">Login</button>
   </form>
 @end

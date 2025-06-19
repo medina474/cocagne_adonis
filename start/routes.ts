@@ -48,7 +48,7 @@ router.get('reset-password/:email', [PasswordResetController, 'showResetForm']).
 router.post('reset-password', [PasswordResetController, 'resetPassword'])
 
 router.group(() => {
-  router.get('dashboard', async ({ view }) => view.render('admin/dashboard'))
+  router.get('/', async ({ view }) => view.render('admin/dashboard'))
   router.resource('users', UsersController).as('admin.users')
   router.resource('adherents', AdherentsController).as('admin.adherents')
   router.resource('profils', ProfilsController).as('admin.profils')
